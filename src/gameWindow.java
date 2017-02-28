@@ -1,8 +1,11 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -44,6 +47,10 @@ public class gameWindow extends Application {
 
         primaryStage.setTitle("Space Adventurer");
         primaryStage.setScene(scene);
+
+        //Fixes window size; Maybe change so window size can change while maintaining aspect ratio
+        primaryStage.setResizable(false);
+
         primaryStage.show();
 
 
@@ -52,19 +59,69 @@ public class gameWindow extends Application {
     private Node addButtons() {
         VBox homeButtons = new VBox();
         homeButtons.setAlignment(Pos.CENTER);
+        String buttonStyle = "-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: transparent";
+        String buttonStyleHover = "-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: orangered";
 
         Button startGame = new Button("Start");
         startGame.setMaxWidth(MAX_BUTTON_WIDTH);
-        startGame.setStyle("-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: none");
+        startGame.setStyle(buttonStyle);
 
         Button instructions = new Button("Instructions");
         instructions.setMaxWidth(MAX_BUTTON_WIDTH);
-        instructions.setStyle("-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: none");
+        instructions.setStyle(buttonStyle);
 
         Button settings = new Button("Settings");
         settings.setMaxWidth(MAX_BUTTON_WIDTH);
-        settings.setStyle("-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: none");
+        settings.setStyle(buttonStyle);
 
+        //Event handlers for mouse hove; feel like there should be a way so this is only written once, not three times
+        startGame.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        startGame.setStyle(buttonStyleHover);
+                    }
+                });
+
+        startGame.addEventHandler(MouseEvent.MOUSE_EXITED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        startGame.setStyle(buttonStyle);
+                    }
+                });
+
+        instructions.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        instructions.setStyle(buttonStyleHover);
+                    }
+                });
+
+        instructions.addEventHandler(MouseEvent.MOUSE_EXITED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        instructions.setStyle(buttonStyle);
+                    }
+                });
+
+        settings.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        settings.setStyle(buttonStyleHover);
+                    }
+                });
+
+        settings.addEventHandler(MouseEvent.MOUSE_EXITED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        settings.setStyle(buttonStyle);
+                    }
+                });
 
         homeButtons.setSpacing(30);
         homeButtons.setPadding(new Insets(0,0,400,0));
