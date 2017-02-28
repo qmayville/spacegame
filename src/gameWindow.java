@@ -19,7 +19,7 @@ import java.awt.*;
  * Created by mayvilleq on 2/27/17.
  */
 public class gameWindow extends Application {
-    public static final double MIN_BUTTON_WIDTH = 60;
+    public static final double MAX_BUTTON_WIDTH = 180;
     private static final double SCENE_WIDTH = 550;
     private static final double SCENE_HEIGHT = 800;
     private Text title = new Text("SPACE ADVENTURE");
@@ -50,21 +50,33 @@ public class gameWindow extends Application {
     }
 
     private Node addButtons() {
-        VBox verticalAlignment = new VBox();
-        verticalAlignment.setAlignment(Pos.CENTER);
+        VBox homeButtons = new VBox();
+        homeButtons.setAlignment(Pos.CENTER);
 
         Button startGame = new Button("Start");
-        startGame.setMinWidth(MIN_BUTTON_WIDTH);
+        startGame.setMaxWidth(MAX_BUTTON_WIDTH);
+        startGame.setStyle("-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: none");
 
-        verticalAlignment.getChildren().addAll(startGame);
+        Button instructions = new Button("Instructions");
+        instructions.setMaxWidth(MAX_BUTTON_WIDTH);
+        instructions.setStyle("-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: none");
 
-        return verticalAlignment;
+        Button settings = new Button("Settings");
+        settings.setMaxWidth(MAX_BUTTON_WIDTH);
+        settings.setStyle("-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: none");
+
+
+        homeButtons.setSpacing(30);
+        homeButtons.setPadding(new Insets(0,0,400,0));
+        homeButtons.getChildren().addAll(startGame, instructions, settings);
+
+        return homeButtons;
     }
 
     private Node addText(Text text, FontWeight fontWeight, int fontSize) {
         FlowPane flowPane = new FlowPane();
         flowPane.setAlignment(Pos.CENTER);
-        text.setFont(Font.font("Times New Roman", fontWeight, fontSize));
+        text.setFont(Font.font("Herculanum", fontWeight, fontSize));
         text.setFill(Color.BEIGE);
         flowPane.getChildren().add(text);
         return flowPane;
