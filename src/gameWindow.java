@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -25,20 +26,21 @@ public class gameWindow extends Application {
     private static final double SCENE_HEIGHT = 800;
     private Text title = new Text("SPACE ADVENTURE");
 
+
     @Override
     public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
 
         Node titlePane = addText(title, FontWeight.BOLD, 50);
-        Node buttonPane = addButtons();
+        Node buttonPane = addButtons(root, primaryStage);
 
         root.setTop(titlePane);
         root.setCenter(buttonPane);
 
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
-//        This is where you can add a custom background (look at stylesheet)
+        //This is where you can add a custom background (look at stylesheet)
         scene.getStylesheets().addAll(this.getClass().getResource("stylesheet.css").toExternalForm());
 
         primaryStage.setTitle("Space Adventurer");
@@ -52,12 +54,13 @@ public class gameWindow extends Application {
 
     }
 
-    private Node addButtons() {
+    private Node addButtons(BorderPane root, Stage mainStage) {
         VBox homeButtons = new VBox();
+//        Setting button alignment and aesthetic format
         homeButtons.setAlignment(Pos.CENTER);
         String buttonStyle = "-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: transparent";
         String buttonStyleHover = "-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: orangered";
-
+//        Create new buttons
         Button startGame = new Button("Start");
         startGame.setMaxWidth(MAX_BUTTON_WIDTH);
         startGame.setStyle(buttonStyle);
@@ -70,11 +73,14 @@ public class gameWindow extends Application {
         instructions.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
 
-                Stage stage = (Stage) instructions.getScene().getWindow();
-                double x = stage.getX();
-                double y = stage.getY();
-                instructionsWindow(x,y);
-                stage.close();
+//                Stage stage = (Stage) instructions.getScene().getWindow();
+//                double x = stage.getX();
+//                double y = stage.getY();
+//                instructionsWindow(x,y);
+//                stage.close();
+                BorderPane bpane2 = new BorderPane();
+                Scene instructionScene = new Scene(bpane2, SCENE_WIDTH, SCENE_HEIGHT);
+                mainStage.setScene(instructionScene);
             }
         });
 
