@@ -80,6 +80,12 @@ public class gameWindow extends Application {
 //                stage.close();
                 BorderPane bpane2 = new BorderPane();
                 Scene instructionScene = new Scene(bpane2, SCENE_WIDTH, SCENE_HEIGHT);
+                instructionScene.getStylesheets().addAll(this.getClass().getResource("stylesheet.css").toExternalForm());
+//                Button backButton = new Button("Back");
+//                backButton.setMaxWidth(MAX_BUTTON_WIDTH);
+//                backButton.setStyle(buttonStyle);
+                Node buttonPane = addInstructionButtons();
+                bpane2.setCenter(buttonPane);
                 mainStage.setScene(instructionScene);
             }
         });
