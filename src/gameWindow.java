@@ -152,11 +152,17 @@ public class gameWindow extends Application {
         Text instructions = new Text();
         instructions.setWrappingWidth(500);
         instructions.setTextAlignment(TextAlignment.JUSTIFY);
-        instructions.setFont(Font.font("Herculanum", FontWeight.BOLD, 30));
+        instructions.setFont(Font.font("copperplate", FontWeight.BOLD, 15));
         instructions.setFill(Color.ORANGERED);
-        instructions.setText("The quick brown fox jumps over the lazy dog The quick brown fox jumps over" +
-                "the lazy dogThe quick brown fox jumps over the lazy dog " +
-                " the lazy dogThe quick brown fox jumps over the lazy dog ");
+        instructions.setText("The goal of the game is to fly your rocket ship as high into the sky as possible." +
+                "As your ship flies you must avoid obstacles by moving side to side." +
+                "To move left hit the left arrow key. To move right hit the right arrow key." +
+                "If you fail to dodge an obstacle you will loose a life." +
+                "You begin the game with 5 lifes, however by flying steering your ship through hearts dispersed throughout your journey you can gain extra lives." +
+                "Additionally, your rocket ship has a limit quantity of fuel that diminishes over time." +
+                "Similarly, to the hearts, you can gain extra fuel by steering your ship through fuel tanks disperse throughout your journey." +
+                "If you either run out of lives or fuel, you lose the game." +
+                "The distance traveled prior to running out of fuel/lives is your score for the game.");
 
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -178,7 +184,7 @@ public class gameWindow extends Application {
         root.setPadding(new Insets(50, 0, 20, 0));
 
         Node titlePane = getTitleNode("SETTINGS", FontWeight.BOLD, 50);
-        Node buttonPane = getInstructionsButtonsNode(mainStage);
+        Node buttonPane = getSettingsButtonsNode(mainStage);
 
         root.setTop(titlePane);
         root.setCenter(buttonPane);
@@ -237,7 +243,7 @@ public class gameWindow extends Application {
         root.setPadding(new Insets(50, 0, 20, 0));
 
         Node titlePane = getTitleNode("PLAY", FontWeight.BOLD, 50);
-        Node buttonPane = getInstructionsButtonsNode(mainStage);
+        Node buttonPane = getPlayButtonsNode(mainStage);
 
         root.setTop(titlePane);
         root.setCenter(buttonPane);
