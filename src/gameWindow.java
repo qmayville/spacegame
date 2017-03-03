@@ -25,10 +25,12 @@ public class gameWindow extends Application {
     private static final double SCENE_WIDTH = 550;
     private static final double SCENE_HEIGHT = 800;
     private Text title = new Text("SPACE ADVENTURE");
+    private Stage mainStage;
 
 
     @Override
     public void start(Stage primaryStage) {
+        mainStage = primaryStage;
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
 
@@ -195,8 +197,8 @@ public class gameWindow extends Application {
     private Node addInstructionButtons() {
         VBox instructionButtons = new VBox();
         instructionButtons.setAlignment(Pos.CENTER);
-        String buttonStyle = "-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: transparent";
-        String buttonStyleHover = "-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: orangered";
+        String buttonStyle = "-fx-font: 22 copperplate; -fx-base: transparent; -fx-text-fill: orangered; -fx-border-color: transparent";
+        String buttonStyleHover = "-fx-font: 22 copperplate; -fx-base: transparent; -fx-text-fill: orangered; -fx-border-color: orangered";
 
         Button menu = new Button("Main Menu");
         menu.setMaxWidth(MAX_BUTTON_WIDTH);
