@@ -142,21 +142,21 @@ public class gameWindow extends Application {
         VBox buttons = new VBox();
         buttons.setAlignment(Pos.CENTER);
         // Create new buttons
-        Button startGame = new Button("Start");
-        startGame.setMaxWidth(MAX_BUTTON_WIDTH);
-
         Button menu = new Button("Main Menu");
         menu.setMaxWidth(MAX_BUTTON_WIDTH);
 
-        Button settings = new Button("Settings");
-        settings.setMaxWidth(MAX_BUTTON_WIDTH);
 
-        startGame.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                mainStage.setScene(playScene);
-            }
-        });
+        FlowPane flowPane = new FlowPane();
+        flowPane.setAlignment(Pos.CENTER);
+
+        Text instructions = new Text();
+        instructions.setWrappingWidth(500);
+        instructions.setTextAlignment(TextAlignment.JUSTIFY);
+        instructions.setFont(Font.font("Herculanum", FontWeight.BOLD, 30));
+        instructions.setFill(Color.ORANGERED);
+        instructions.setText("The quick brown fox jumps over the lazy dog The quick brown fox jumps over" +
+                "the lazy dogThe quick brown fox jumps over the lazy dog " +
+                " the lazy dogThe quick brown fox jumps over the lazy dog ");
 
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -165,16 +165,10 @@ public class gameWindow extends Application {
             }
         });
 
-        settings.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                mainStage.setScene(settingsScene);
-            }
-        });
 
         buttons.setSpacing(30);
-        buttons.setPadding(new Insets(0, 0, 400, 0));
-        buttons.getChildren().addAll(menu, startGame, settings);
+        buttons.setPadding(new Insets(0, 0, 600, 0));
+        buttons.getChildren().addAll(menu, instructions);
 
         return buttons;
     }
