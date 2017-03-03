@@ -24,8 +24,6 @@ public class gameWindowNew extends Application {
     private static final double SCENE_WIDTH = 550;
     private static final double SCENE_HEIGHT = 800;
     private Stage mainStage;
-    private String buttonStyle;
-    private String buttonStyleHover;
     //scene variables
     private Scene menuScene;
     private Scene instructionsScene;
@@ -36,10 +34,6 @@ public class gameWindowNew extends Application {
     @Override
     public void start(Stage primaryStage) {
         mainStage = primaryStage;
-
-        // variables that keep track of style. TODO: Move these to the css file if possible.
-        buttonStyle = "-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: transparent";
-        buttonStyleHover = "-fx-font: 22 copperplate; -fx-base: none; -fx-text-fill: orangered; -fx-border-color: orangered";
 
         // Sets scene variables to the scene returned by their respective builder methods
         menuScene = buildMenuScene(mainStage);
@@ -90,15 +84,12 @@ public class gameWindowNew extends Application {
         // Create new buttons
         Button startGame = new Button("Start");
         startGame.setMaxWidth(MAX_BUTTON_WIDTH);
-        startGame.setStyle(buttonStyle);
 
         Button instructions = new Button("Instructions");
         instructions.setMaxWidth(MAX_BUTTON_WIDTH);
-        instructions.setStyle(buttonStyle);
 
         Button settings = new Button("Settings");
         settings.setMaxWidth(MAX_BUTTON_WIDTH);
-        settings.setStyle(buttonStyle);
 
         startGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -120,55 +111,6 @@ public class gameWindowNew extends Application {
                 mainStage.setScene(settingsScene);
             }
         });
-
-        //Event handlers for mouse hover; feel like there should be a way so this is only written once, not three times
-        startGame.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        startGame.setStyle(buttonStyleHover);
-                    }
-                });
-
-        startGame.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        startGame.setStyle(buttonStyle);
-                    }
-                });
-
-        instructions.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        instructions.setStyle(buttonStyleHover);
-                    }
-                });
-
-        instructions.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        instructions.setStyle(buttonStyle);
-                    }
-                });
-
-        settings.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        settings.setStyle(buttonStyleHover);
-                    }
-                });
-
-        settings.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        settings.setStyle(buttonStyle);
-                    }
-                });
 
         buttons.setSpacing(30);
         buttons.setPadding(new Insets(0, 0, 400, 0));
@@ -202,15 +144,12 @@ public class gameWindowNew extends Application {
         // Create new buttons
         Button startGame = new Button("Start");
         startGame.setMaxWidth(MAX_BUTTON_WIDTH);
-        startGame.setStyle(buttonStyle);
 
         Button menu = new Button("Main Menu");
         menu.setMaxWidth(MAX_BUTTON_WIDTH);
-        menu.setStyle(buttonStyle);
 
         Button settings = new Button("Settings");
         settings.setMaxWidth(MAX_BUTTON_WIDTH);
-        settings.setStyle(buttonStyle);
 
         startGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -232,55 +171,6 @@ public class gameWindowNew extends Application {
                 mainStage.setScene(settingsScene);
             }
         });
-
-        //Event handlers for mouse hover; feel like there should be a way so this is only written once, not three times
-        startGame.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        startGame.setStyle(buttonStyleHover);
-                    }
-                });
-
-        startGame.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        startGame.setStyle(buttonStyle);
-                    }
-                });
-
-        menu.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        menu.setStyle(buttonStyleHover);
-                    }
-                });
-
-        menu.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        menu.setStyle(buttonStyle);
-                    }
-                });
-
-        settings.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        settings.setStyle(buttonStyleHover);
-                    }
-                });
-
-        settings.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        settings.setStyle(buttonStyle);
-                    }
-                });
 
         buttons.setSpacing(30);
         buttons.setPadding(new Insets(0, 0, 400, 0));
@@ -313,15 +203,12 @@ public class gameWindowNew extends Application {
         // Create new buttons
         Button startGame = new Button("Start");
         startGame.setMaxWidth(MAX_BUTTON_WIDTH);
-        startGame.setStyle(buttonStyle);
 
         Button instructions = new Button("Instructions");
         instructions.setMaxWidth(MAX_BUTTON_WIDTH);
-        instructions.setStyle(buttonStyle);
 
         Button menu = new Button("Menu");
         menu.setMaxWidth(MAX_BUTTON_WIDTH);
-        menu.setStyle(buttonStyle);
 
         startGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -343,55 +230,6 @@ public class gameWindowNew extends Application {
                 mainStage.setScene(menuScene);
             }
         });
-
-        //Event handlers for mouse hover; feel like there should be a way so this is only written once, not three times
-        startGame.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        startGame.setStyle(buttonStyleHover);
-                    }
-                });
-
-        startGame.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        startGame.setStyle(buttonStyle);
-                    }
-                });
-
-        instructions.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        instructions.setStyle(buttonStyleHover);
-                    }
-                });
-
-        instructions.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        instructions.setStyle(buttonStyle);
-                    }
-                });
-
-        menu.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        menu.setStyle(buttonStyleHover);
-                    }
-                });
-
-        menu.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        menu.setStyle(buttonStyle);
-                    }
-                });
 
         homeButtons.setSpacing(30);
         homeButtons.setPadding(new Insets(0, 0, 400, 0));
@@ -424,15 +262,12 @@ public class gameWindowNew extends Application {
         // Create new buttons
         Button menu = new Button("Menu");
         menu.setMaxWidth(MAX_BUTTON_WIDTH);
-        menu.setStyle(buttonStyle);
 
         Button instructions = new Button("Instructions");
         instructions.setMaxWidth(MAX_BUTTON_WIDTH);
-        instructions.setStyle(buttonStyle);
 
         Button settings = new Button("Settings");
         settings.setMaxWidth(MAX_BUTTON_WIDTH);
-        settings.setStyle(buttonStyle);
 
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -454,55 +289,6 @@ public class gameWindowNew extends Application {
                 mainStage.setScene(settingsScene);
             }
         });
-
-        //Event handlers for mouse hover; feel like there should be a way so this is only written once, not three times
-        menu.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        menu.setStyle(buttonStyleHover);
-                    }
-                });
-
-        menu.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        menu.setStyle(buttonStyle);
-                    }
-                });
-
-        instructions.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        instructions.setStyle(buttonStyleHover);
-                    }
-                });
-
-        instructions.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        instructions.setStyle(buttonStyle);
-                    }
-                });
-
-        settings.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        settings.setStyle(buttonStyleHover);
-                    }
-                });
-
-        settings.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        settings.setStyle(buttonStyle);
-                    }
-                });
 
         buttons.setSpacing(30);
         buttons.setPadding(new Insets(0, 0, 400, 0));
