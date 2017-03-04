@@ -5,16 +5,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.scene.text.*;
-import javafx.scene.control.Button;
-
 
 /**
  * Created by mayvilleq on 2/27/17.
@@ -121,6 +122,8 @@ public class gameWindow extends Application {
 
 
     private Scene buildInstructionsScene(Stage mainStage) {
+
+
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
 
@@ -146,20 +149,30 @@ public class gameWindow extends Application {
         Button backButton = new Button("Back");
         backButton.setMaxWidth(MAX_BUTTON_WIDTH);
 
-        Text instructions = new Text();
-        instructions.setWrappingWidth(500);
-        instructions.setTextAlignment(TextAlignment.JUSTIFY);
-        instructions.setFont(Font.font("copperplate", FontWeight.BOLD, 15));
-        instructions.setFill(Color.ORANGERED);
-        instructions.setText("The goal of the game is to fly your rocket ship as high into the sky as possible. " +
-                "As your ship flies you must avoid obstacles by moving side to side. " +
-                "To move left hit the left arrow key. To move right hit the right arrow key. " +
-                "If you fail to dodge an obstacle you will loose a life. " +
-                "You begin the game with 5 lives, however by flying steering your ship through hearts dispersed throughout your journey you can gain extra lives. " +
-                "Additionally, your rocket ship has a limit quantity of fuel that diminishes over time. " +
-                "Similarly, to the hearts, you can gain extra fuel by steering your ship through fuel tanks disperse throughout your journey. " +
-                "If you either run out of lives or fuel, you lose the game. " +
-                "The distance traveled prior to running out of fuel/lives is your score for the game. ");
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(5);
+        ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+        Text t = new Text();
+        t.setEffect(ds);
+        t.setCache(true);
+        t.setX(50);
+        t.setY(50);
+        t.setFill(Color.ORANGERED);
+        t.setFont(Font.font("copperplate", FontWeight.EXTRA_BOLD, 20));
+        t.setWrappingWidth(500);
+        t.setTextAlignment(TextAlignment.JUSTIFY);
+        t.setText("• The goal of the game is to fly your rocket ship as high into the sky as possible.\n" +
+                "\n" +
+                "• As your ship flies you must avoid obstacles through moving side to side by pressing the left and right arrow keys on your keyboard.\n" +
+                "\n" +
+                "• If you fail to dodge an obstacle you will lose a life.\n" +
+                "\n" +
+                "• By steering your ship through hearts dispersed throughout your journey you can gain extra lives. \n" +
+                "\n" +
+                "• Your rocket ship has a limit quantity of fuel that diminishes over time. You can gain extra fuel by steering your ship through fuel tanks disperse throughout your journey. \n" +
+                "\n" +
+                "• If you either run out of lives or fuel, you lose the game. The distance traveled prior to running out of fuel/lives is your score for the game.\n");
 
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -171,7 +184,7 @@ public class gameWindow extends Application {
 
         buttons.setSpacing(30);
         buttons.setPadding(new Insets(50, 0, 600, 0));
-        buttons.getChildren().addAll(instructions, backButton);
+        buttons.getChildren().addAll(t, backButton);
 
         return buttons;
     }
