@@ -1,9 +1,24 @@
 /* Some styling within java class. Should we have all within css? */
 
 .root{
-    -fx-background-image: url("http://3.bp.blogspot.com/-j2u7hhL3OW0/Uop6FvdhrVI/AAAAAAAAA10/9inlhrMUR4w/s1600/AndySpace.jpg");
+    /*-fx-background-image: url("http://3.bp.blogspot.com/-j2u7hhL3OW0/Uop6FvdhrVI/AAAAAAAAA10/9inlhrMUR4w/s1600/AndySpace.jpg"); */
+    -fx-background-color: black;
+    -fx-background-image: url("/space.jpg");
     -fx-background-repeat: stretch;
     -fx-background-size: 550 800;
     -fx-background-position: center center;
     /*-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+}
+
+.button {   -fx-font: 22 copperplate;
+            -fx-background-color: transparent;
+            -fx-text-fill: orangered;
+             -fx-border-color: transparent;
+}
+
+.button:hover {
+    -fx-font: 22 copperplate;
+    -fx-background-color: transparent;
+    -fx-text-fill: orangered;
+    -fx-border-color: orangered;
 }
