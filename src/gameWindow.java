@@ -9,8 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -149,30 +151,38 @@ public class gameWindow extends Application {
         Button backButton = new Button("Back");
         backButton.setMaxWidth(MAX_BUTTON_WIDTH);
 
-        DropShadow ds = new DropShadow();
-        ds.setOffsetY(5);
-        ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+        StackPane textTransparency = new StackPane();
 
-        Text t = new Text();
-        t.setEffect(ds);
-        t.setCache(true);
-        t.setX(50);
-        t.setY(50);
-        t.setFill(Color.ORANGERED);
-        t.setFont(Font.font("copperplate", FontWeight.EXTRA_BOLD, 20));
-        t.setWrappingWidth(500);
-        t.setTextAlignment(TextAlignment.JUSTIFY);
-        t.setText("• The goal of the game is to fly your rocket ship as high into the sky as possible.\n" +
+        Rectangle blackTransparency = new Rectangle();
+        blackTransparency.setHeight(570);
+        blackTransparency.setWidth(520);
+        blackTransparency.setFill(Color.web("black", 0.75));
+
+        Text instructions = new Text();
+        instructions.setCache(true);
+        instructions.setX(50);
+        instructions.setY(50);
+        instructions.setFill(Color.ORANGERED);
+        instructions.setFont(Font.font("copperplate", FontWeight.EXTRA_BOLD, 20));
+        instructions.setWrappingWidth(500);
+        instructions.setTextAlignment(TextAlignment.JUSTIFY);
+        instructions.setText("• The goal of the game is to fly your rocket ship as high into the sky as possible.\n" +
                 "\n" +
-                "• As your ship flies you must avoid obstacles through moving side to side by pressing the left and right arrow keys on your keyboard.\n" +
+                "• As your ship flies you must avoid obstacles through moving side to side by pressing the left and " +
+                "right arrow keys on your keyboard.\n" +
                 "\n" +
                 "• If you fail to dodge an obstacle you will lose a life.\n" +
                 "\n" +
                 "• By steering your ship through hearts dispersed throughout your journey you can gain extra lives. \n" +
                 "\n" +
-                "• Your rocket ship has a limit quantity of fuel that diminishes over time. You can gain extra fuel by steering your ship through fuel tanks disperse throughout your journey. \n" +
+                "• Your rocket ship has a limit quantity of fuel that diminishes over time. You can gain extra fuel by " +
+                "steering your ship through fuel tanks disperse throughout your journey. \n" +
                 "\n" +
-                "• If you either run out of lives or fuel, you lose the game. The distance traveled prior to running out of fuel/lives is your score for the game.\n");
+                "• If you either run out of lives or fuel, you lose the game. The distance traveled prior to running out" +
+                " of fuel/lives is your score for the game.\n");
+
+        textTransparency.getChildren().add(blackTransparency);
+        textTransparency.getChildren().add(instructions);
 
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -182,9 +192,9 @@ public class gameWindow extends Application {
         });
 
 
-        buttons.setSpacing(30);
+        buttons.setSpacing(10);
         buttons.setPadding(new Insets(50, 0, 600, 0));
-        buttons.getChildren().addAll(t, backButton);
+        buttons.getChildren().addAll(textTransparency, backButton);
 
         return buttons;
     }
