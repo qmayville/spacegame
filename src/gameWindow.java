@@ -128,7 +128,7 @@ public class gameWindow extends Application {
         Node buttonPane = getInstructionsButtonsNode(mainStage);
 
         root.setTop(titlePane);
-        root.setCenter(buttonPane);
+        root.setBottom(buttonPane);
 
         Scene InstructionsScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
@@ -140,31 +140,28 @@ public class gameWindow extends Application {
 
     private Node getInstructionsButtonsNode(Stage mainStage) {
         VBox buttons = new VBox();
-        buttons.setAlignment(Pos.CENTER);
+        buttons.setAlignment(Pos.BOTTOM_CENTER);
+
         // Create new buttons
-        Button menu = new Button("Main Menu");
-        menu.setMaxWidth(MAX_BUTTON_WIDTH);
-
-
-        FlowPane flowPane = new FlowPane();
-        flowPane.setAlignment(Pos.CENTER);
+        Button backButton = new Button("Back");
+        backButton.setMaxWidth(MAX_BUTTON_WIDTH);
 
         Text instructions = new Text();
         instructions.setWrappingWidth(500);
         instructions.setTextAlignment(TextAlignment.JUSTIFY);
         instructions.setFont(Font.font("copperplate", FontWeight.BOLD, 15));
         instructions.setFill(Color.ORANGERED);
-        instructions.setText("The goal of the game is to fly your rocket ship as high into the sky as possible." +
-                "As your ship flies you must avoid obstacles by moving side to side." +
-                "To move left hit the left arrow key. To move right hit the right arrow key." +
-                "If you fail to dodge an obstacle you will loose a life." +
-                "You begin the game with 5 lifes, however by flying steering your ship through hearts dispersed throughout your journey you can gain extra lives." +
-                "Additionally, your rocket ship has a limit quantity of fuel that diminishes over time." +
-                "Similarly, to the hearts, you can gain extra fuel by steering your ship through fuel tanks disperse throughout your journey." +
-                "If you either run out of lives or fuel, you lose the game." +
-                "The distance traveled prior to running out of fuel/lives is your score for the game.");
+        instructions.setText("The goal of the game is to fly your rocket ship as high into the sky as possible. " +
+                "As your ship flies you must avoid obstacles by moving side to side. " +
+                "To move left hit the left arrow key. To move right hit the right arrow key. " +
+                "If you fail to dodge an obstacle you will loose a life. " +
+                "You begin the game with 5 lives, however by flying steering your ship through hearts dispersed throughout your journey you can gain extra lives. " +
+                "Additionally, your rocket ship has a limit quantity of fuel that diminishes over time. " +
+                "Similarly, to the hearts, you can gain extra fuel by steering your ship through fuel tanks disperse throughout your journey. " +
+                "If you either run out of lives or fuel, you lose the game. " +
+                "The distance traveled prior to running out of fuel/lives is your score for the game. ");
 
-        menu.setOnAction(new EventHandler<ActionEvent>() {
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 mainStage.setScene(menuScene);
@@ -173,8 +170,8 @@ public class gameWindow extends Application {
 
 
         buttons.setSpacing(30);
-        buttons.setPadding(new Insets(0, 0, 600, 0));
-        buttons.getChildren().addAll(menu, instructions);
+        buttons.setPadding(new Insets(50, 0, 600, 0));
+        buttons.getChildren().addAll(instructions, backButton);
 
         return buttons;
     }
