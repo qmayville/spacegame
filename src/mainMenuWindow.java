@@ -19,8 +19,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-/**
- * Created by mayvilleq on 2/27/17.
+/*
+ * The window for the main menu.
  */
 public class mainMenuWindow extends Application {
     public static final double MAX_BUTTON_WIDTH = 180;
