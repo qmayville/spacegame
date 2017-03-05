@@ -1,9 +1,9 @@
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-/*
+/**
  * Sprite class is used to animate view objects. Sprite objects can move around and possibly intersect with each other.
- * they have an image representation, which cis repeatedly drawn to the screen.
+ * they have an image representation, which is repeatedly drawn to the screen.
  */
 public class Sprite
 {
