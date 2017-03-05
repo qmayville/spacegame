@@ -29,13 +29,13 @@ public class gameWindow extends Application{
         gameScene = new Scene(root);
         gameStage.setScene( gameScene );
 
-        Canvas canvas = new Canvas( 400, 200 );
+        Canvas canvas = new Canvas( 500, 500 );
         root.getChildren().add( canvas );
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         Image ship = new Image( "ship.png" );
-        gc.drawImage( ship, 500, 500 );
+        gc.drawImage( ship, 300, 300 );
 
         gameStage.show();
 
