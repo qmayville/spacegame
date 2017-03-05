@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 /**
  * Created by mayvilleq on 2/27/17.
  */
-public class gameWindow extends Application {
+public class mainMenuWindow extends Application {
     public static final double MAX_BUTTON_WIDTH = 180;
     private static final double SCENE_WIDTH = 550;
     private static final double SCENE_HEIGHT = 800;
