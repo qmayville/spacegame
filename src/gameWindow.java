@@ -1,9 +1,15 @@
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.util.Random;
@@ -90,8 +96,59 @@ public class gameWindow extends Application{
 
         shipYCoord = 600;
 
+        Sprite spaceship = new Sprite();
+        spaceship.setImage(ship);
+        spaceship.setPosition(shipXCoord,shipYCoord);
+        spaceship.setVelocity(0,0);
+        spaceship.render(graphics);
+
+        LongProperty lastUpdateTime = new SimpleLongProperty();
+        AnimationTimer testAnimation = new AnimationTimer() {
+            @Override
+            public void handle(long currentTime) {
+                if (lastUpdateTime.get() > 0) {
+                    final double elapsedTime = (currentTime - lastUpdateTime.get()) / 1_000_000_000.0;
+
+                    gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                        @Override
+                        public void handle(KeyEvent event) {
+                            if (event.getCode() == KeyCode.RIGHT) {
+                                spaceship.addVelocity(50,0);
+                            } else if (event.getCode() == KeyCode.LEFT) {
+                                spaceship.addVelocity(-50,0);
+                            }
+                        }
+                    });
+
+                    gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+                        @Override
+                        public void handle(KeyEvent event) {
+                            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT) {
+                                spaceship.setVelocity(0,0);
+                            }
+                        }
+                    });
+
+                    spaceship.update(elapsedTime);
+                    graphics.clearRect(0,0,canvasWidth,canvasHeight);
+                    graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
+//        the x and y placement of these units are only temporary
+                    graphics.drawImage(fuel, 250, 250);
+                    graphics.drawImage(asteroid, 100, 100);
+                    graphics.drawImage(fuelGauge,530, 400);
+                    spaceship.render(graphics);
+                }
+                lastUpdateTime.set(currentTime);
+            }
+        };
+        testAnimation.start();
+
+
+
+
+
+
         graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
-        graphics.drawImage(ship, shipXCoord, shipYCoord );
 //        the x and y placement of these units are only temporary
         graphics.drawImage(fuel, 250, 250);
         graphics.drawImage(asteroid, 100, 100);

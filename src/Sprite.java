@@ -14,6 +14,9 @@ public class Sprite
     private double velocityY;
     private double width;
     private double height;
+    private static final double MAX_X = 460;
+    private static final double MIN_X = 10;
+
 
     public Sprite()
     {
@@ -48,6 +51,7 @@ public class Sprite
     {
         positionX = x;
         positionY = y;
+        boundX();
     }
 
     /*
@@ -75,6 +79,7 @@ public class Sprite
     {
         positionX += velocityX * time;
         positionY += velocityY * time;
+        boundX();
     }
 
     /*
@@ -109,5 +114,14 @@ public class Sprite
     {
         return " Position: [" + positionX + "," + positionY + "]" 
         + " Velocity: [" + velocityX + "," + velocityY + "]";
+    }
+
+    private void boundX() {
+        if (positionX > MAX_X) {
+            positionX = MAX_X;
+        }
+        if (positionX < MIN_X) {
+            positionX = MIN_X;
+        }
     }
 }
