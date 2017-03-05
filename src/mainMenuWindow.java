@@ -36,6 +36,7 @@ public class mainMenuWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         mainStage = primaryStage;
 
         // Sets scene variables to the scene returned by their respective builder methods
@@ -53,18 +54,23 @@ public class mainMenuWindow extends Application {
 
 
     private Node getTitleNode(String textString, FontWeight fontWeight, int fontSize) {
+
         Text text = new Text(textString);
-        FlowPane flowPane = new FlowPane();
-        flowPane.setAlignment(Pos.CENTER);
         text.setFont(Font.font("Herculanum", fontWeight, fontSize));
         text.setFill(Color.BEIGE);
+
+        FlowPane flowPane = new FlowPane();
+        flowPane.setAlignment(Pos.CENTER);
         flowPane.getChildren().add(text);
+
         return flowPane;
     }
 
 
     private Scene buildMenuScene(Stage mainStage) {
+
         BorderPane root = new BorderPane();
+
         root.setPadding(new Insets(50, 0, 20, 0));
 
         Node titlePane = getTitleNode("SPACE ADVENTURE", FontWeight.BOLD, 50);
@@ -77,13 +83,16 @@ public class mainMenuWindow extends Application {
 
         //This is where you can add a custom background (look at stylesheet)
         menuScene.getStylesheets().addAll(this.getClass().getResource("stylesheet.css").toExternalForm());
+
         return menuScene;
     }
 
 
     private Node getMenuButtonsNode(Stage mainStage) {
+
         VBox buttons = new VBox();
         buttons.setAlignment(Pos.CENTER);
+
         // Create new buttons
         Button startGame = new Button("Start");
         startGame.setMaxWidth(MAX_BUTTON_WIDTH);
@@ -144,6 +153,7 @@ public class mainMenuWindow extends Application {
     }
 
     private Node getInstructionsButtonsNode(Stage mainStage) {
+
         VBox buttons = new VBox();
         buttons.setAlignment(Pos.BOTTOM_CENTER);
 
@@ -200,6 +210,7 @@ public class mainMenuWindow extends Application {
     }
 
     private Scene buildSettingsScene(Stage mainStage) {
+
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
 
@@ -218,8 +229,10 @@ public class mainMenuWindow extends Application {
     }
 
     private Node getSettingsButtonsNode(Stage mainStage) {
+
         VBox homeButtons = new VBox();
         homeButtons.setAlignment(Pos.CENTER);
+
         // Create new buttons
         Button toggleSound = new Button("Toggle Sound");
         toggleSound.setMaxWidth(280);
@@ -259,6 +272,7 @@ public class mainMenuWindow extends Application {
     }
 
     private Scene buildPlayScene(Stage mainStage) {
+
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
 
@@ -277,8 +291,10 @@ public class mainMenuWindow extends Application {
     }
 
     private Node getPlayButtonsNode(Stage mainStage) {
+
         VBox buttons = new VBox();
         buttons.setAlignment(Pos.CENTER);
+
         // Create new buttons
         Button menu = new Button("Menu");
         menu.setMaxWidth(MAX_BUTTON_WIDTH);
