@@ -27,6 +27,7 @@ public class mainMenuWindow extends Application {
     private static final double SCENE_WIDTH = 550;
     private static final double SCENE_HEIGHT = 700;
     private Stage mainStage;
+
     //scene variables
     private Scene menuScene;
     private Scene instructionsScene;
@@ -35,11 +36,13 @@ public class mainMenuWindow extends Application {
     private Scene toggleSoundScene;
 
 
+    /*
+     * Creates JavaFX window and all respective button nodes for the home screen
+     */
     @Override
     public void start(Stage primaryStage) {
 
         mainStage = primaryStage;
-
 
         // Sets scene variables to the scene returned by their respective builder methods
         menuScene = buildMenuScene(mainStage);
@@ -56,7 +59,10 @@ public class mainMenuWindow extends Application {
 
     }
 
-
+    /*
+     * A helper function for building JavaFX scenes.
+     * @Parameters(String, FontWeight, int)
+     */
     private Node getTitleNode(String textString, FontWeight fontWeight, int fontSize) {
 
         Text text = new Text(textString);
@@ -70,7 +76,9 @@ public class mainMenuWindow extends Application {
         return flowPane;
     }
 
-
+    /*
+     * Builds the main menu scene with buttons
+     */
     private Scene buildMenuScene(Stage mainStage) {
 
         BorderPane root = new BorderPane();
@@ -91,7 +99,9 @@ public class mainMenuWindow extends Application {
         return menuScene;
     }
 
-
+    /*
+     * Obtains all children nodes (buttons) for the main menu scene
+     */
     private Node getMenuButtonsNode(Stage mainStage) {
 
         VBox buttons = new VBox();
@@ -107,34 +117,45 @@ public class mainMenuWindow extends Application {
         Button settings = new Button("Settings");
         settings.setMaxWidth(MAX_BUTTON_WIDTH);
 
+//        Event handlers for on button mouse clicks
         startGame.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
-//                gameWindow game = new gameWindow();
+
                 try {
+
                     gameWindow game = new gameWindow();
                     game.start(gameWindow.gameStage);
                     mainStage.close();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+
+                } catch (Exception error) {
+
+                    error.printStackTrace();
+
                 }
             }
         });
 
         instructions.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
                 mainStage.setScene(instructionsScene);
             }
+
         });
 
         settings.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
                 mainStage.setScene(settingsScene);
             }
+
         });
 
+//        Format the buttons to show up correctly in the main window
         buttons.setSpacing(30);
         buttons.setPadding(new Insets(0, 0, 400, 0));
         buttons.getChildren().addAll(startGame, instructions, settings);
@@ -142,10 +163,10 @@ public class mainMenuWindow extends Application {
         return buttons;
     }
 
-
+    /*
+     * Scene builder for the instructions page
+     */
     private Scene buildInstructionsScene(Stage mainStage) {
-
-
 
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
@@ -165,6 +186,10 @@ public class mainMenuWindow extends Application {
 
     }
 
+    /*
+     * Fill out the instructions scene with instructions related information
+     * Creates a back button for going to the previous page.
+     */
     private Node getInstructionsButtonsNode(Stage mainStage) {
 
         VBox buttons = new VBox();
@@ -176,11 +201,13 @@ public class mainMenuWindow extends Application {
 
         StackPane textTransparency = new StackPane();
 
+//        Black transparency for easier reading on instructions page
         Rectangle blackTransparency = new Rectangle();
         blackTransparency.setHeight(360);
         blackTransparency.setWidth(520);
         blackTransparency.setFill(Color.web("black", 0.75));
 
+//        Text for instructions page
         Text instructions = new Text();
         instructions.setCache(true);
         instructions.setX(50);
@@ -207,13 +234,15 @@ public class mainMenuWindow extends Application {
         textTransparency.getChildren().add(blackTransparency);
         textTransparency.getChildren().add(instructions);
 
+//        Event handler for button on instructions page
         backButton.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
                 mainStage.setScene(menuScene);
             }
-        });
 
+        });
 
         buttons.setSpacing(10);
         buttons.setPadding(new Insets(50, 0, 600, 0));
@@ -222,6 +251,9 @@ public class mainMenuWindow extends Application {
         return buttons;
     }
 
+    /*
+     * Scene builder for settings menu
+     */
     private Scene buildSettingsScene(Stage mainStage) {
 
         BorderPane root = new BorderPane();
@@ -241,6 +273,9 @@ public class mainMenuWindow extends Application {
         return settingsScene;
     }
 
+    /*
+     * Creates option buttons for settings menu
+     */
     private Node getSettingsButtonsNode(Stage mainStage) {
 
         VBox homeButtons = new VBox();
@@ -256,11 +291,14 @@ public class mainMenuWindow extends Application {
         Button highscores = new Button("Highscores");
         highscores.setMaxWidth(MAX_BUTTON_WIDTH);
 
+//        Event Handlers for mouse clicks on buttons
         highscores.setOnAction(new EventHandler<ActionEvent>() {
+//            Not yet implemented due to playability of game
             @Override
             public void handle(ActionEvent e) {
 
             }
+
         });
 
         toggleSound.setOnAction(new EventHandler<ActionEvent>() {
@@ -284,7 +322,11 @@ public class mainMenuWindow extends Application {
         return homeButtons;
     }
 
+    /*
+     * Scene builder for turning sound on or off
+     */
     private Scene buildToggleSoundScene(Stage mainStage) {
+
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
 
@@ -302,6 +344,9 @@ public class mainMenuWindow extends Application {
         return toggleSoundScene;
     }
 
+    /*
+     * Creates button to turn sound off or on
+     */
     private Node getToggleSoundButtonsNode(Stage mainStage) {
         VBox homeButtons = new VBox();
         homeButtons.setAlignment(Pos.CENTER);
@@ -315,17 +360,21 @@ public class mainMenuWindow extends Application {
 
 
         toggleSound.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
                 mainStage.setScene(toggleSoundScene);
             }
+
         });
 
         back.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
                 mainStage.setScene(menuScene);
             }
+
         });
 
         homeButtons.setSpacing(30);
@@ -335,6 +384,9 @@ public class mainMenuWindow extends Application {
         return homeButtons;
     }
 
+    /*
+     * Create a new window for actual gameplay
+     */
     private Scene buildPlayScene(Stage mainStage) {
 
         BorderPane root = new BorderPane();
@@ -354,6 +406,9 @@ public class mainMenuWindow extends Application {
         return playScene;
     }
 
+    /*
+     * Constructs a new window for the game
+     */
     private Node getPlayButtonsNode(Stage mainStage) {
 
         VBox buttons = new VBox();
@@ -363,32 +418,15 @@ public class mainMenuWindow extends Application {
         Button menu = new Button("Menu");
         menu.setMaxWidth(MAX_BUTTON_WIDTH);
 
-//        Button instructions = new Button("Instructions");
-//        instructions.setMaxWidth(MAX_BUTTON_WIDTH);
-//
-//        Button settings = new Button("Settings");
-//        settings.setMaxWidth(MAX_BUTTON_WIDTH);
-
+//        Event handler for mouse click
         menu.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
                 mainStage.setScene(menuScene);
             }
-        });
 
-//        instructions.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent e) {
-//                mainStage.setScene(instructionsScene);
-//            }
-//        });
-//
-//        settings.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent e) {
-//                mainStage.setScene(settingsScene);
-//            }
-//        });
+        });
 
         buttons.setSpacing(30);
         buttons.setPadding(new Insets(0, 0, 400, 0));
