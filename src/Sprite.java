@@ -1,7 +1,10 @@
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
+/*
+ * Sprite class is used to animate view objects. Sprite objects can move around and possibly intersect with each other.
+ * they have an image representation, which cis repeatedly drawn to the screen.
+ */
 public class Sprite
 {
     private Image image;
@@ -19,7 +22,9 @@ public class Sprite
         velocityX = 0;
         velocityY = 0;
     }
-
+    /*
+     * sets display image from image object for sprite
+     */
     public void setImage(Image i)
     {
         image = i;
@@ -27,51 +32,79 @@ public class Sprite
         height = i.getHeight();
     }
 
+    /*
+     * sets display image from image filename for sprite
+     */
     public void setImage(String filename)
     {
         Image i = new Image(filename);
         setImage(i);
     }
 
+    /*
+     * set position of sprite
+     */
     public void setPosition(double x, double y)
     {
         positionX = x;
         positionY = y;
     }
 
+    /*
+     * sets x and y velocity of sprite
+     */
     public void setVelocity(double x, double y)
     {
         velocityX = x;
         velocityY = y;
     }
 
+    /*
+     * change current velocity of sprite
+     */
     public void addVelocity(double x, double y)
     {
         velocityX += x;
         velocityY += y;
     }
 
+    /*
+     * updates position based on velocity and the time that has elapsed since last position change.
+     */
     public void update(double time)
     {
         positionX += velocityX * time;
         positionY += velocityY * time;
     }
 
+    /*
+     * renders the sprite image to the screen
+     */
     public void render(GraphicsContext gc)
     {
         gc.drawImage( image, positionX, positionY );
     }
 
+    /*
+     * gets the rectangular boundary of the sprite. this is used to detect colisions. Can be changed to
+     * polygon in the future.
+     */
     public Rectangle2D getBoundary()
     {
         return new Rectangle2D(positionX,positionY,width,height);
     }
 
+    /*
+     * Checks for intersection between two sprites
+     */
     public boolean intersects(Sprite s)
     {
         return s.getBoundary().intersects( this.getBoundary() );
     }
-    
+
+    /*
+     * represents position and velocity as string for debugging.
+     */
     public String toString()
     {
         return " Position: [" + positionX + "," + positionY + "]" 
