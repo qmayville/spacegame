@@ -6,7 +6,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -32,7 +31,6 @@ public class mainMenuWindow extends Application {
     private Scene menuScene;
     private Scene instructionsScene;
     private Scene settingsScene;
-    private Scene playScene;
     private Scene toggleSoundScene;
 
 
@@ -48,7 +46,6 @@ public class mainMenuWindow extends Application {
         menuScene = buildMenuScene(mainStage);
         instructionsScene = buildInstructionsScene(mainStage);
         settingsScene = buildSettingsScene(mainStage);
-        playScene = buildPlayScene(mainStage);
         toggleSoundScene = buildToggleSoundScene(mainStage);
 
         // sets up and starts the stage
@@ -384,54 +381,4 @@ public class mainMenuWindow extends Application {
         return homeButtons;
     }
 
-    /*
-     * Create a new window for actual gameplay
-     */
-    private Scene buildPlayScene(Stage mainStage) {
-
-        BorderPane root = new BorderPane();
-        root.setPadding(new Insets(50, 0, 20, 0));
-
-        Node titlePane = getTitleNode("PLAY", FontWeight.BOLD, 50);
-        Node buttonPane = getPlayButtonsNode(mainStage);
-
-        root.setTop(titlePane);
-        root.setCenter(buttonPane);
-
-        Scene playScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-
-        //This is where you can add a custom background (look at stylesheet)
-        playScene.getStylesheets().addAll(this.getClass().getResource("stylesheet.css").toExternalForm());
-
-        return playScene;
-    }
-
-    /*
-     * Constructs a new window for the game
-     */
-    private Node getPlayButtonsNode(Stage mainStage) {
-
-        VBox buttons = new VBox();
-        buttons.setAlignment(Pos.CENTER);
-
-        // Create new buttons
-        Button menu = new Button("Menu");
-        menu.setMaxWidth(MAX_BUTTON_WIDTH);
-
-//        Event handler for mouse click
-        menu.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                mainStage.setScene(menuScene);
-            }
-
-        });
-
-        buttons.setSpacing(30);
-        buttons.setPadding(new Insets(0, 0, 400, 0));
-        buttons.getChildren().addAll(menu);
-
-        return buttons;
-    }
 }
