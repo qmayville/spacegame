@@ -154,7 +154,7 @@ public class gameWindow extends Application {
         StackPane textTransparency = new StackPane();
 
         Rectangle blackTransparency = new Rectangle();
-        blackTransparency.setHeight(570);
+        blackTransparency.setHeight(400);
         blackTransparency.setWidth(520);
         blackTransparency.setFill(Color.web("black", 0.75));
 
@@ -163,7 +163,7 @@ public class gameWindow extends Application {
         instructions.setX(50);
         instructions.setY(50);
         instructions.setFill(Color.ORANGERED);
-        instructions.setFont(Font.font("copperplate", FontWeight.EXTRA_BOLD, 20));
+        instructions.setFont(Font.font("copperplate", FontWeight.THIN, 15));
         instructions.setWrappingWidth(500);
         instructions.setTextAlignment(TextAlignment.JUSTIFY);
         instructions.setText("• The goal of the game is to fly your rocket ship as high into the sky as possible.\n" +
