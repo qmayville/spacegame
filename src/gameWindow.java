@@ -13,38 +13,47 @@ import javafx.stage.Stage;
  * Created by envy on 3/4/17.
  */
 public class gameWindow extends Application{
+
 //    private static Stage gameStage;
     static Stage gameStage = new Stage();
     private Scene gameScene;
     private int shipWidth = 60;
     private int shipHeight = 80;
+    public int shipYCoord;
+    private int shipXCoord = 250;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        //Used to make the primaryStage publicly available to mainMenuWindow so that it can be called.
         gameWindow.gameStage = primaryStage;
 
-        gameStage.setTitle("Space Adventurer");
+        //Creates window and canvas for drawing images
+        setup();
 
+        gameStage.show();
+
+    }
+
+    private void setup(){
+        gameStage.setTitle("Space Adventurer");
+        //Create a new Group for the scene and canvas
         Group root = new Group();
 
         gameScene = new Scene(root);
         gameStage.setScene( gameScene );
 
         Canvas canvas = new Canvas( 550, 700 );
-        root.getChildren().add( canvas );
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        root.getChildren().add(canvas);
+
+        GraphicsContext graphics = canvas.getGraphicsContext2D();
 
         Image ship = new Image( "ship.png", shipWidth, shipHeight, true, true );
 
-        gc.drawImage( ship, 250, 600 );
+        shipYCoord = 600;
 
-
-
-        gameStage.show();
-
-
+        graphics.drawImage( ship, shipXCoord, shipYCoord );
     }
 
 }
