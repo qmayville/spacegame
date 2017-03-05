@@ -116,6 +116,9 @@ public class Sprite
         + " Velocity: [" + velocityX + "," + velocityY + "]";
     }
 
+    /*
+     * method which keeps the sprite within the requested x bound.
+     */
     private void boundX() {
         if (positionX > MAX_X) {
             positionX = MAX_X;
