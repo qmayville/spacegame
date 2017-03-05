@@ -26,8 +26,8 @@ public class gameWindow extends Application{
 
 //    Items here should be kept public because we're going to have to modify it later
     public Image fuel;
-    private int fuelWidth = 40;
-    private int fuelHeight = 60;
+    private int fuelWidth = 30;
+    private int fuelHeight = 50;
 
     public Image asteroid;
     public int asteroidSize;
@@ -51,6 +51,9 @@ public class gameWindow extends Application{
 
     }
 
+    /*
+     * Preprocess the game window gui
+     */
     private void setup(){
         gameStage.setTitle("Space Adventurer");
         //Create a new Group for the scene and canvas
@@ -82,6 +85,9 @@ public class gameWindow extends Application{
         graphics.drawImage(fuelGauge,530, 400);
     }
 
+    /*
+     * Randomizes the size of asteroids that are created
+     */
     public int randomAsteroidSize(){
         Random rand = new Random();
         int randomSize = rand.nextInt(100);
