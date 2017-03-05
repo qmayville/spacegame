@@ -13,7 +13,8 @@ import javafx.stage.Stage;
  * Created by envy on 3/4/17.
  */
 public class gameWindow extends Application{
-    private Stage gameStage;
+//    private static Stage gameStage;
+    static Stage gameStage = new Stage();
     private Scene gameScene;
     private int shipWidth = 60;
     private int shipHeight = 80;
@@ -21,7 +22,7 @@ public class gameWindow extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        gameStage = primaryStage;
+        gameWindow.gameStage = primaryStage;
 
         gameStage.setTitle("Space Adventurer");
 

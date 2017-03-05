@@ -106,13 +106,14 @@ public class mainMenuWindow extends Application {
         startGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-//                mainStage.setScene(playScene);
-//                new Thread() {
-//                    @Override
-//                    public void run() {
-                        Application.launch(gameWindow.class);
-//                    }
-//                }
+//                gameWindow game = new gameWindow();
+                try {
+                    gameWindow game = new gameWindow();
+                    game.start(gameWindow.gameStage);
+                    mainStage.close();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
