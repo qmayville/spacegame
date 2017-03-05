@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 public class gameWindow extends Application{
     private Stage gameStage;
     private Scene gameScene;
+    private int shipWidth = 60;
+    private int shipHeight = 80;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -22,48 +24,26 @@ public class gameWindow extends Application{
         gameStage = primaryStage;
 
         gameStage.setTitle("Space Adventurer");
-//        gameScene = buildGameScene(gameStage);
 
         Group root = new Group();
 
         gameScene = new Scene(root);
         gameStage.setScene( gameScene );
 
-        Canvas canvas = new Canvas( 500, 500 );
+        Canvas canvas = new Canvas( 550, 700 );
         root.getChildren().add( canvas );
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        Image ship = new Image( "ship.png" );
-        gc.drawImage( ship, 300, 300 );
+        Image ship = new Image( "ship.png", shipWidth, shipHeight, true, true );
+
+        gc.drawImage( ship, 250, 600 );
+
+
 
         gameStage.show();
 
 
     }
 
-//    private Scene buildGameScene(Stage gameStage){
-//
-//        Group root = new Group();
-//        Scene theScene = new Scene( root );
-//        gameStage.setScene( theScene );
-//
-//        Canvas canvas = new Canvas( 400, 200 );
-//        root.getChildren().add( canvas );
-//
-//        GraphicsContext gc = canvas.getGraphicsContext2D();
-//
-//        gc.setFill( Color.RED );
-//        gc.setStroke( Color.BLACK );
-//        gc.setLineWidth(2);
-//        Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 48 );
-//        gc.setFont( theFont );
-//        gc.fillText( "Hello, World!", 60, 50 );
-//        gc.strokeText( "Hello, World!", 60, 50 );
-//
-//        Image earth = new Image( "ship.png" );
-//        gc.drawImage( earth, 180, 100 );
-//
-//        gameStage.show();
-//    }
 }
