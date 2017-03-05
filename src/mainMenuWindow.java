@@ -32,6 +32,7 @@ public class mainMenuWindow extends Application {
     private Scene instructionsScene;
     private Scene settingsScene;
     private Scene playScene;
+    private Scene toggleSoundScene;
 
 
     @Override
@@ -39,17 +40,20 @@ public class mainMenuWindow extends Application {
 
         mainStage = primaryStage;
 
+
         // Sets scene variables to the scene returned by their respective builder methods
         menuScene = buildMenuScene(mainStage);
         instructionsScene = buildInstructionsScene(mainStage);
         settingsScene = buildSettingsScene(mainStage);
         playScene = buildPlayScene(mainStage);
+        toggleSoundScene = buildToggleSoundScene(mainStage);
 
         // sets up and starts the stage
         primaryStage.setTitle("Space Adventurer");
         primaryStage.setScene(menuScene);
         primaryStage.setResizable(false); //could change so that it is resizable
         primaryStage.show();
+
     }
 
 
@@ -142,6 +146,7 @@ public class mainMenuWindow extends Application {
     private Scene buildInstructionsScene(Stage mainStage) {
 
 
+
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
 
@@ -157,6 +162,7 @@ public class mainMenuWindow extends Application {
         InstructionsScene.getStylesheets().addAll(this.getClass().getResource("stylesheet.css").toExternalForm());
 
         return InstructionsScene;
+
     }
 
     private Node getInstructionsButtonsNode(Stage mainStage) {
@@ -260,7 +266,7 @@ public class mainMenuWindow extends Application {
         toggleSound.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-
+                mainStage.setScene(toggleSoundScene);
             }
         });
 
@@ -274,6 +280,57 @@ public class mainMenuWindow extends Application {
         homeButtons.setSpacing(30);
         homeButtons.setPadding(new Insets(0, 0, 400, 0));
         homeButtons.getChildren().addAll(highscores, toggleSound, back);
+
+        return homeButtons;
+    }
+
+    private Scene buildToggleSoundScene(Stage mainStage) {
+        BorderPane root = new BorderPane();
+        root.setPadding(new Insets(50, 0, 20, 0));
+
+        Node titlePane = getTitleNode("Toggle Sound", FontWeight.BOLD, 50);
+        Node buttonPane = getToggleSoundButtonsNode(mainStage);
+
+        root.setTop(titlePane);
+        root.setCenter(buttonPane);
+
+        Scene toggleSoundScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+
+        //This is where you can add a custom background (look at stylesheet)
+        toggleSoundScene.getStylesheets().addAll(this.getClass().getResource("stylesheet.css").toExternalForm());
+
+        return toggleSoundScene;
+    }
+
+    private Node getToggleSoundButtonsNode(Stage mainStage) {
+        VBox homeButtons = new VBox();
+        homeButtons.setAlignment(Pos.CENTER);
+
+        // Create new buttons
+        Button toggleSound = new Button("Toggle Sound");
+        toggleSound.setMaxWidth(280);
+
+        Button back = new Button("Back");
+        back.setMaxWidth(MAX_BUTTON_WIDTH);
+
+
+        toggleSound.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                mainStage.setScene(toggleSoundScene);
+            }
+        });
+
+        back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                mainStage.setScene(menuScene);
+            }
+        });
+
+        homeButtons.setSpacing(30);
+        homeButtons.setPadding(new Insets(0, 0, 400, 0));
+        homeButtons.getChildren().addAll(toggleSound, back);
 
         return homeButtons;
     }
