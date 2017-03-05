@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.util.Random;
 
 /*
+ * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
+ *
  * The window for the actual gameplay. For now displays a static background, once game is implemented
  * the background will change over time.
  */

@@ -19,6 +19,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 /*
+ * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
+ *
  * The window for the main menu.
  */
 public class mainMenuWindow extends Application {
