@@ -154,7 +154,7 @@ public class gameWindow extends Application {
         StackPane textTransparency = new StackPane();
 
         Rectangle blackTransparency = new Rectangle();
-        blackTransparency.setHeight(400);
+        blackTransparency.setHeight(360);
         blackTransparency.setWidth(520);
         blackTransparency.setFill(Color.web("black", 0.75));
 
@@ -221,30 +221,30 @@ public class gameWindow extends Application {
         VBox homeButtons = new VBox();
         homeButtons.setAlignment(Pos.CENTER);
         // Create new buttons
-        Button startGame = new Button("Start");
-        startGame.setMaxWidth(MAX_BUTTON_WIDTH);
+        Button toggleSound = new Button("Toggle Sound");
+        toggleSound.setMaxWidth(280);
 
-        Button instructions = new Button("Instructions");
-        instructions.setMaxWidth(MAX_BUTTON_WIDTH);
+        Button back = new Button("Back");
+        back.setMaxWidth(MAX_BUTTON_WIDTH);
 
-        Button menu = new Button("Menu");
-        menu.setMaxWidth(MAX_BUTTON_WIDTH);
+        Button highscores = new Button("Highscores");
+        highscores.setMaxWidth(MAX_BUTTON_WIDTH);
 
-        startGame.setOnAction(new EventHandler<ActionEvent>() {
+        highscores.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                mainStage.setScene(playScene);
+
             }
         });
 
-        instructions.setOnAction(new EventHandler<ActionEvent>() {
+        toggleSound.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                mainStage.setScene(instructionsScene);
+
             }
         });
 
-        menu.setOnAction(new EventHandler<ActionEvent>() {
+        back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 mainStage.setScene(menuScene);
@@ -253,7 +253,7 @@ public class gameWindow extends Application {
 
         homeButtons.setSpacing(30);
         homeButtons.setPadding(new Insets(0, 0, 400, 0));
-        homeButtons.getChildren().addAll(menu, startGame, instructions);
+        homeButtons.getChildren().addAll(highscores, toggleSound, back);
 
         return homeButtons;
     }
@@ -283,36 +283,36 @@ public class gameWindow extends Application {
         Button menu = new Button("Menu");
         menu.setMaxWidth(MAX_BUTTON_WIDTH);
 
-        Button instructions = new Button("Instructions");
-        instructions.setMaxWidth(MAX_BUTTON_WIDTH);
-
-        Button settings = new Button("Settings");
-        settings.setMaxWidth(MAX_BUTTON_WIDTH);
+//        Button instructions = new Button("Instructions");
+//        instructions.setMaxWidth(MAX_BUTTON_WIDTH);
+//
+//        Button settings = new Button("Settings");
+//        settings.setMaxWidth(MAX_BUTTON_WIDTH);
 
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                mainStage.setScene(playScene);
+                mainStage.setScene(menuScene);
             }
         });
 
-        instructions.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                mainStage.setScene(instructionsScene);
-            }
-        });
-
-        settings.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                mainStage.setScene(settingsScene);
-            }
-        });
+//        instructions.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent e) {
+//                mainStage.setScene(instructionsScene);
+//            }
+//        });
+//
+//        settings.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent e) {
+//                mainStage.setScene(settingsScene);
+//            }
+//        });
 
         buttons.setSpacing(30);
         buttons.setPadding(new Insets(0, 0, 400, 0));
-        buttons.getChildren().addAll(menu, instructions, settings);
+        buttons.getChildren().addAll(menu);
 
         return buttons;
     }
