@@ -17,6 +17,16 @@ public class gameWindow extends Application{
     static Stage gameStage = new Stage();
     private Scene gameScene;
 
+    private int canvasWidth = 550;
+    private int canvasHeight = 700;
+
+    public Image background;
+    private int backgroundWidth = canvasWidth;
+//    9699 is actual height of background
+    public int backgroundHeight = 4000;
+    public int backgroundXCoord = 0;
+    public int backgroundYCoord = -2290;
+
     public Image ship;
     private int shipWidth = 60;
     private int shipHeight = 80;
@@ -62,11 +72,13 @@ public class gameWindow extends Application{
         gameScene = new Scene(root);
         gameStage.setScene( gameScene );
 
-        Canvas canvas = new Canvas( 550, 700 );
+        Canvas canvas = new Canvas( canvasWidth, canvasHeight );
 
         root.getChildren().add(canvas);
 
         GraphicsContext graphics = canvas.getGraphicsContext2D();
+
+        background = new Image("resources/gameBackgroundGround.png", backgroundWidth, backgroundHeight, true, true);
 
         ship = new Image("resources/ship.png", shipWidth, shipHeight, true, true );
         fuel = new Image("resources/fuel.png", fuelWidth, fuelHeight, true, true);
@@ -78,6 +90,7 @@ public class gameWindow extends Application{
 
         shipYCoord = 600;
 
+        graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
         graphics.drawImage(ship, shipXCoord, shipYCoord );
 //        the x and y placement of these units are only temporary
         graphics.drawImage(fuel, 250, 250);
