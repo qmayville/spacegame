@@ -287,18 +287,32 @@ public class mainMenuView extends Application {
         Button back = new Button("Back");
         back.setMaxWidth(MAX_BUTTON_WIDTH);
 
-        Button highscores = new Button("Highscores");
-        highscores.setMaxWidth(MAX_BUTTON_WIDTH);
+        StackPane textTransparency = new StackPane();
 
-//        Event Handlers for mouse clicks on buttons
-        highscores.setOnAction(new EventHandler<ActionEvent>() {
-//            Not yet implemented due to playability of game
-            @Override
-            public void handle(ActionEvent e) {
+        Rectangle blackTransparency = new Rectangle();
+        blackTransparency.setHeight(160);
+        blackTransparency.setWidth(500);
+        blackTransparency.setFill(Color.web("black", 0.75));
 
-            }
 
-        });
+        Text highScore = new Text();
+        highScore.setCache(true);
+        highScore.setX(50);
+        highScore.setY(50);
+        highScore.setFill(Color.ORANGERED);
+        highScore.setFont(Font.font("copperplate", FontWeight.EXTRA_BOLD, 25));
+        highScore.setWrappingWidth(500);
+        highScore.setTextAlignment(TextAlignment.JUSTIFY);
+        highScore.setText("\n• High Score: 1,123,123,123\n" +
+                "\n" +
+                "• High Score 2: 34,234\n" +
+                "\n" +
+                "• High Score 3: 12\n");
+
+        textTransparency.getChildren().add(blackTransparency);
+        textTransparency.getChildren().add(highScore);
+
+
 
         toggleSound.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -316,14 +330,13 @@ public class mainMenuView extends Application {
 
         homeButtons.setSpacing(30);
         homeButtons.setPadding(new Insets(0, 0, 400, 0));
-        homeButtons.getChildren().addAll(highscores, toggleSound, back);
+        homeButtons.getChildren().addAll(textTransparency,toggleSound, back);
 
         return homeButtons;
     }
-
     /*
-     * Scene builder for turning sound on or off
-     */
+         * Scene builder for turning sound on or off
+         */
     private Scene buildToggleSoundScene(Stage mainStage) {
 
         BorderPane root = new BorderPane();
@@ -351,21 +364,13 @@ public class mainMenuView extends Application {
         homeButtons.setAlignment(Pos.CENTER);
 
         // Create new buttons
-        Button toggleSound = new Button("Toggle Sound");
-        toggleSound.setMaxWidth(280);
+        Button toggleSound1 = new Button("On");
+        Button toggleSound2 = new Button("Off");
+        toggleSound1.setMaxWidth(200);
+        toggleSound2.setMaxWidth(200);
 
         Button back = new Button("Back");
         back.setMaxWidth(MAX_BUTTON_WIDTH);
-
-
-        toggleSound.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                mainStage.setScene(toggleSoundScene);
-            }
-
-        });
 
         back.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -378,7 +383,7 @@ public class mainMenuView extends Application {
 
         homeButtons.setSpacing(30);
         homeButtons.setPadding(new Insets(0, 0, 400, 0));
-        homeButtons.getChildren().addAll(toggleSound, back);
+        homeButtons.getChildren().addAll(toggleSound1, toggleSound2, back);
 
         return homeButtons;
     }
