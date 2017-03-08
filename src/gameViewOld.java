@@ -19,7 +19,7 @@ import java.util.Random;
  * The window for the actual gameplay. For now displays a static background, once game is implemented
  * the background will change over time.
  */
-public class gameView extends Application{
+public class gameViewOld extends Application{
 
     static Stage gameStage = new Stage();
     private Scene gameScene;
@@ -46,8 +46,8 @@ public class gameView extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        //Used to make the primaryStage publicly available to mainMenuView so that it can be called.
-        gameView.gameStage = primaryStage;
+        //Used to make the primaryStage publicly available to mainMenuViewOld so that it can be called.
+        gameViewOld.gameStage = primaryStage;
 
         //Creates window and canvas for drawing images
         setup();

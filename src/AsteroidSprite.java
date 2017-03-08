@@ -6,25 +6,30 @@ import javafx.scene.image.Image;
 public class AsteroidSprite extends AbstractSprite {
     private static final double MAX_X = 460;
     private static final double MIN_X = 0;
-    private double minY;
+    private double maxY;
 
     private boolean isBelowScreen;
 
-    public AsteroidSprite(double positionX, double positionY, Image image, double minY) {
+    public AsteroidSprite(double positionX, double positionY, double velocityY, Image image, double maxY) {
 
         super(positionX, positionY, image);
-        this.minY = minY;
-        this.isBelowScreen = getPositionY() < minY;
+        setVelocityY(velocityY);
+        this.maxY = maxY;
+        this.isBelowScreen = getPositionY() > maxY;
 
 
     }
 
     @Override
-    public void updatePositionY(double time, double velocityY) {
-        super.updatePositionY(time, velocityY);
-        if(getPositionY() < minY){
+    public void updatePositionY(double time) {
+        super.updatePositionY(time);
+        if(getPositionY() > maxY){
             isBelowScreen = true;
         }
+    }
+
+    public boolean isBelowScreen() {
+        return isBelowScreen;
     }
 
 

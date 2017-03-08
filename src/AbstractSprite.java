@@ -10,8 +10,8 @@ public abstract class AbstractSprite
     private Image image;
     private double positionX;
     private double positionY;
-    private double velocityX;
-    private double velocityY;
+    private double velocityX = 0;
+    private double velocityY = 0;
     private double width;
     private double height;
 
@@ -21,7 +21,7 @@ public abstract class AbstractSprite
     {
         this.positionX = positionX;
         this.positionY = positionY;
-        this.image = image;
+        setImage(image);
     }
 
     public double getPositionX() {
@@ -53,10 +53,14 @@ public abstract class AbstractSprite
     /*
      * sets display image from image filename for sprite
      */
-    public void setImage(String filename)
+    public void setImageString(String filename)
     {
         Image i = new Image(filename);
         setImage(i);
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     /*
@@ -74,17 +78,17 @@ public abstract class AbstractSprite
     }
 
     /*
-     * updates X position based on velocity and the time that has elapsed since last position change.
+     * updates X position based on the time that has elapsed since last position change.
      */
-    public void updatePositionX(double time, double velocityX)
+    public void updatePositionX(double time)
     {
         positionX += velocityX * time;
     }
 
     /*
-     * updates Y position based on velocity and the time that has elapsed since last position change.
+     * updates Y position based the time that has elapsed since last position change.
      */
-    public void updatePositionY(double time, double velocityY)
+    public void updatePositionY(double time)
     {
         positionY += velocityY * time;
     }
@@ -109,7 +113,7 @@ public abstract class AbstractSprite
     /*
      * change current X velocity of sprite
      */
-    public void addVelocity(double x)
+    public void addVelocityX(double x)
     {
         velocityX += x;
     }
@@ -139,6 +143,4 @@ public abstract class AbstractSprite
     {
         return s.getBoundary().intersects( this.getBoundary() );
     }
-
-
 }

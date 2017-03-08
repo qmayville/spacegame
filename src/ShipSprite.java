@@ -21,8 +21,8 @@ public class ShipSprite extends AbstractSprite {
         return fuel;
     }
 
-    public void updateFuel(double changeValue){
-        fuel += changeValue;
+    public void updateFuel(double changeFuelValue){
+        fuel += changeFuelValue;
         if (fuel > 100){
             fuel = 100;
         }
@@ -39,6 +39,21 @@ public class ShipSprite extends AbstractSprite {
         return lives;
     }
 
+    public void changeLives(int changeLivesValue) {
+        lives += changeLivesValue;
+    }
+
+    @Override
+    public void setPositionX(double x) {
+        super.setPositionX(x);
+        boundX();
+    }
+
+    @Override
+    public void updatePositionX(double time) {
+        super.updatePositionX(time);
+        boundX();
+    }
 
 
     private void boundX() {
