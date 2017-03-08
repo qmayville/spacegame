@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 public class ShipSprite extends AbstractSprite {
     private double fuel;
     private int lives;
+    private boolean immune;
     private static final double MAX_X = 460;
     private static final double MIN_X = 10;
 
@@ -14,6 +15,8 @@ public class ShipSprite extends AbstractSprite {
         super(positionX, positionY, image);
 
         this.fuel = fuel;
+        this.immune = false;
+        this.lives = lives;
     }
 
     public double getFuel(){
@@ -65,4 +68,11 @@ public class ShipSprite extends AbstractSprite {
         }
     }
 
+    public boolean isImmune() {
+        return immune;
+    }
+
+    public void setImmune(boolean immuneValue) {
+        this.immune = immuneValue;
+    }
 }

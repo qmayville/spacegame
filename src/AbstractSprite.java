@@ -40,6 +40,10 @@ public abstract class AbstractSprite
         return velocityY;
     }
 
+    public Image getImage() {
+        return image;
+    }
+
     /*
      * sets display image from image object for sprite
      */
@@ -57,10 +61,6 @@ public abstract class AbstractSprite
     {
         Image i = new Image(filename);
         setImage(i);
-    }
-
-    public Image getImage() {
-        return image;
     }
 
     /*
@@ -127,6 +127,7 @@ public abstract class AbstractSprite
     }
 
 
+    //TODO override this method to get more accurate collisions (triangles, circles, etc)
     /*
      * gets the rectangular boundary of the sprite. this is used to detect colisions. Can be changed to
      * polygon in the future.

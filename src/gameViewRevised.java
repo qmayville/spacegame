@@ -61,6 +61,7 @@ public class gameViewRevised extends Application{
         //Creates window and canvas for drawing images
         setup();
 
+        gameStage.setResizable(false); //could change so that it is resizable
         gameStage.show();
 
     }
@@ -70,14 +71,11 @@ public class gameViewRevised extends Application{
     private void createImages() {
         background = new Image("resources/gameBackgroundGround.png", backgroundWidth, backgroundHeight, true, true);
         fuel = new Image("resources/fuel.png", 30, 50, true, true);
-        //int asteroidSize = randomAsteroidSize();
-        //asteroid = new Image("resources/asteroid.png", asteroidSize, asteroidSize, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
-        //ship = new Image("resources/ship.png", 60, 80, true, true );
     }
 
     /*
-     * Preprocess the game window gui and constructs animation to handle spaceship movement
+     * Preprocess the game window gui and constructs key handlers for left and right movement
      */
     private void setup() {
         gameStage.setTitle("Space Adventurer");
@@ -112,9 +110,9 @@ public class gameViewRevised extends Application{
 
     public void update(){
         graphics.clearRect(0, 0, canvasWidth, canvasHeight);
-        drawBackgroundImages(graphics, background, fuel, fuelGauge);
-        drawSpaceship();
+        drawBackgroundImages(background, fuel, fuelGauge);
         drawAsteroids();
+        drawSpaceship();
     }
 
     public void drawSpaceship() {
@@ -139,7 +137,7 @@ public class gameViewRevised extends Application{
     /*
      * Draws the background images. Temporary method, will be implemented in controller once background is changing.
      */
-    private void drawBackgroundImages(GraphicsContext graphics, Image background, Image fuel, Image fuelGauge) {
+    private void drawBackgroundImages(Image background, Image fuel, Image fuelGauge) {
         graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
 //        the x and y placement of these units are only temporary
         graphics.drawImage(fuel, 250, 250);

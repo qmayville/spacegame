@@ -2,8 +2,8 @@
  * Created by Ethan Cassel-Mace, Hannah Barnstone, Quinn Mayville, && Michael Vue
  */
 public class gameController {
-    GameModel model;
-    gameViewRevised view;
+    private GameModel model;
+    private gameViewRevised view;
 
     public gameController(GameModel model) {
         this.model = model;
