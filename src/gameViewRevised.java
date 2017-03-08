@@ -113,6 +113,15 @@ public class gameViewRevised extends Application{
         drawBackgroundImages(background, fuel, fuelGauge);
         drawAsteroids();
         drawSpaceship();
+        drawFuelIndicator();
+    }
+
+    private void drawFuelIndicator() {
+        FuelIndicatorSprite fuelIndicator = model.getFuelIndicator();
+        Image fuelIndicatorImage = fuelIndicator.getImage();
+        double fuelIndicatorPositionX = fuelIndicator.getPositionX();
+        double fuelIndicatorPositionY = fuelIndicator.getPositionY();
+        graphics.drawImage( fuelIndicatorImage, fuelIndicatorPositionX, fuelIndicatorPositionY);
     }
 
     public void drawSpaceship() {

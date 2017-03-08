@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Created by Michael Vue, Ethan Cassel-Mace, Hannah Barnstone, && Quinn Mayville
@@ -12,6 +13,7 @@ import java.util.Iterator;
 public class GameModel {
 
     private ShipSprite spaceship;
+    private FuelIndicatorSprite fuelIndicator;
     private ArrayList<AsteroidSprite> obstacleList;
     // TODO private ArrayList<PowerUpSprite> PowerUpList;
     // TODO Needs fuel gaugue/indicator
@@ -20,20 +22,26 @@ public class GameModel {
     private double time;
     private double score;
     private double immuneTime;
+    private double lastObstacleGenerationTime;
     private gameViewRevised view;
+    private Random randomNumberGenerator = new Random();
 
 
     public GameModel(){
         this.height = 0;
         this.time = 0;
         this.score = 0;
-        this.immuneTime = -.6;
+        this.immuneTime = -1.5;
+        this.lastObstacleGenerationTime = -2;
+
         obstacleList = new ArrayList<>();
     }
 
     public ShipSprite getSpaceship() {
         return spaceship;
     }
+
+    public FuelIndicatorSprite getFuelIndicator() { return fuelIndicator; }
 
     public ArrayList<AsteroidSprite> getObstacleList() {
         return obstacleList;
@@ -42,7 +50,12 @@ public class GameModel {
     public void initialize() {
         Image shipImage = new Image("resources/ship.png", 60, 80, true, true);
         this.spaceship = new ShipSprite(250, 600, shipImage, 100, 3);
+        Image fuelIndicatorImage = new Image("resources/arrow.png",23,19,true,true);
+        this.fuelIndicator = new FuelIndicatorSprite(516,400,fuelIndicatorImage,20);
 
+
+
+        /*
         //For testing am creating four 40 x 40 asteroids
         Image asteroidImage = new Image("resources/asteroid.png", 70, 70, true, true);
         AsteroidSprite testAsteroid = new AsteroidSprite(250, 150, 100, asteroidImage, 700);
@@ -53,6 +66,7 @@ public class GameModel {
         obstacleList.add(testAsteroid2);
         obstacleList.add(testAsteroid3);
         obstacleList.add(testAsteroid4);
+        */
     }
 
     public void setView(gameViewRevised view) {
@@ -77,8 +91,10 @@ public class GameModel {
                         spaceship.setImmune(false);
                     }
 
-                    //Move spaceship
+                    //Move spaceship and fuel indicator
                     spaceship.updatePositionX(elapsedTime);
+                    fuelIndicator.updatePositionY(elapsedTime);
+
                     //Move existing obstacles
                     for (AsteroidSprite obstacle : obstacleList) {
                         obstacle.updatePositionY(elapsedTime);
@@ -105,7 +121,11 @@ public class GameModel {
                         }
                     }
 
-                    generateObstacles();
+                    //Generate asteroids every 2 time-units
+                    if (lastObstacleGenerationTime + 2 < time) {
+                        generateObstacles();
+                        lastObstacleGenerationTime = time;
+                    }
 
                     //TODO fuel, scorekeeping, bonuses
                     view.update();
@@ -121,6 +141,12 @@ public class GameModel {
      * Generates obstacle sprites that are added to obstacleList
      */
     private void generateObstacles() {
+        //Temporary basic implementation generates one asteroid at a time
+        int positionX = randomNumberGenerator.nextInt(460);
+        Image asteroidImage = new Image("resources/asteroid.png", 70, 70, true, true);
+        //TODO make velocity faster as time goes by, make sure velocity is same as backgrounds
+        AsteroidSprite testAsteroid = new AsteroidSprite(positionX, -100, 100, asteroidImage, 700);
+        obstacleList.add(testAsteroid);
     }
 
 
