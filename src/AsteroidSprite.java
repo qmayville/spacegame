@@ -14,13 +14,7 @@ public class AsteroidSprite extends AbstractSprite {
 
         super(positionX, positionY, image);
         this.minY = minY;
-
-        if(getPositionY() < minY){
-            isBelowScreen = true;
-        }
-        else{
-            isBelowScreen = false;
-        }
+        this.isBelowScreen = getPositionY() < minY;
 
 
     }

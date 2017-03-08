@@ -10,6 +10,8 @@ public abstract class AbstractSprite
     private Image image;
     private double positionX;
     private double positionY;
+    private double velocityX;
+    private double velocityY;
     private double width;
     private double height;
 
@@ -28,6 +30,14 @@ public abstract class AbstractSprite
 
     public double getPositionY() {
         return positionY;
+    }
+
+    public double getVelocityX() {
+        return velocityX;
+    }
+
+    public double getVelocityY() {
+        return velocityY;
     }
 
     /*
@@ -78,6 +88,40 @@ public abstract class AbstractSprite
     {
         positionY += velocityY * time;
     }
+
+    /*
+     * set X velocity of sprite
+     */
+    public void setVelocityX(double x)
+    {
+        velocityX = x;
+    }
+
+
+    /*
+     * set Y velocity of sprite
+     */
+    public void setVelocityY(double y)
+    {
+        velocityY = y;
+    }
+
+    /*
+     * change current X velocity of sprite
+     */
+    public void addVelocity(double x)
+    {
+        velocityX += x;
+    }
+
+    /*
+     * change current Y velocity of sprite
+     */
+    public void addVelocityY(double y)
+    {
+        velocityY += y;
+    }
+
 
     /*
      * gets the rectangular boundary of the sprite. this is used to detect colisions. Can be changed to
