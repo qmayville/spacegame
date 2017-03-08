@@ -12,8 +12,7 @@ public abstract class AbstractSprite
     private double positionY;
     private double width;
     private double height;
-    private static final double MAX_X = 460;
-    private static final double MIN_X = 10;
+
 
 
     public AbstractSprite(double positionX, double positionY, Image image)
@@ -21,6 +20,14 @@ public abstract class AbstractSprite
         this.positionX = positionX;
         this.positionY = positionY;
         this.image = image;
+    }
+
+    public double getPositionX() {
+        return positionX;
+    }
+
+    public double getPositionY() {
+        return positionY;
     }
 
     /*
@@ -43,31 +50,33 @@ public abstract class AbstractSprite
     }
 
     /*
-     * set position of sprite
+     * set X position of sprite
      */
-    public void setPosition(double x, double y)
-    {
+    public void setPositionX(double x) {
         positionX = x;
-        positionY = y;
-        boundX();
     }
 
     /*
-     * updates position based on velocity and the time that has elapsed since last position change.
+     * set Y position of sprite
      */
-    public void update(double time, double velocityX, double velocityY)
+    public void setPositionY(double y) {
+        positionY = y;
+    }
+
+    /*
+     * updates X position based on velocity and the time that has elapsed since last position change.
+     */
+    public void updatePositionX(double time, double velocityX)
     {
         positionX += velocityX * time;
-        positionY += velocityY * time;
-        boundX();
     }
 
     /*
-     * renders the sprite image to the screen
+     * updates Y position based on velocity and the time that has elapsed since last position change.
      */
-    public void render(GraphicsContext gc)
+    public void updatePositionY(double time, double velocityY)
     {
-        gc.drawImage( image, positionX, positionY );
+        positionY += velocityY * time;
     }
 
     /*
@@ -82,29 +91,10 @@ public abstract class AbstractSprite
     /*
      * Checks for intersection between two sprites
      */
-    public boolean intersects(Sprite s)
+    public boolean intersects(AbstractSprite s)
     {
         return s.getBoundary().intersects( this.getBoundary() );
     }
 
-    /*
-     * represents position and velocity as string for debugging.
-     */
-//    public String toString()
-//    {
-//        return " Position: [" + positionX + "," + positionY + "]"
-//                + " Velocity: [" + velocityX + "," + velocityY + "]";
-//    }
 
-    /*
-     * method which keeps the sprite within the requested x bound.
-     */
-    private void boundX() {
-        if (positionX > MAX_X) {
-            positionX = MAX_X;
-        }
-        if (positionX < MIN_X) {
-            positionX = MIN_X;
-        }
-    }
 }

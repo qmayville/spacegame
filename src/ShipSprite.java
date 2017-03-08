@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 public class ShipSprite extends AbstractSprite {
     private double fuel;
     private int lives;
+    private static final double MAX_X = 460;
+    private static final double MIN_X = 10;
 
     public ShipSprite(double positionX, double positionY, Image image, double fuel, int lives) {
 
@@ -14,14 +16,38 @@ public class ShipSprite extends AbstractSprite {
         this.fuel = fuel;
     }
 
-    private double getFuel(){
+    public double getFuel(){
 
-        return 0;
+        return fuel;
     }
 
-    private int getLives(){
+    public void updateFuel(double changeValue){
+        fuel += changeValue;
+        if (fuel > 100){
+            fuel = 100;
+        }
+    }
 
-        return 0;
+    public void setFuel(double fuelValue){
+        fuel += fuelValue;
+        if (fuel > 100){
+            fuel = 100;
+        }
+    }
+
+    public int getLives(){
+        return lives;
+    }
+
+
+
+    private void boundX() {
+        if (getPositionX() > MAX_X) {
+            setPositionX(MAX_X);
+        }
+        if (getPositionX() < MIN_X) {
+            setPositionX(MIN_X);
+        }
     }
 
 }
