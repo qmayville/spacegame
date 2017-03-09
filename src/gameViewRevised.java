@@ -108,6 +108,8 @@ public class gameViewRevised extends Application{
         });
     }
 
+
+    //Order matters
     public void update(){
         graphics.clearRect(0, 0, canvasWidth, canvasHeight);
         drawBackgroundImages(background, fuel, fuelGauge);

@@ -38,6 +38,8 @@ public class GameModel {
         obstacleList = new ArrayList<>();
     }
 
+    public double getScore(){return score;}
+
     public ShipSprite getSpaceship() {
         return spaceship;
     }
@@ -51,31 +53,18 @@ public class GameModel {
     public void initialize() {
         Image shipImage = new Image("resources/ship.png", 60, 80, true, true);
         this.spaceship = new ShipSprite(250, 600, shipImage, 100, 3);
-        Image fuelIndicatorImage = new Image("resources/arrow.png",23,19,true,true);
-        this.fuelIndicator = new FuelIndicatorSprite(516,400,fuelIndicatorImage,20);
-
-
-
-        /*
-        //For testing am creating four 40 x 40 asteroids
-        Image asteroidImage = new Image("resources/asteroid.png", 70, 70, true, true);
-        AsteroidSprite testAsteroid = new AsteroidSprite(250, 150, 100, asteroidImage, 700);
-        AsteroidSprite testAsteroid2 = new AsteroidSprite(250, -200, 100, asteroidImage, 700);
-        AsteroidSprite testAsteroid3 = new AsteroidSprite(250, -550, 100, asteroidImage, 700);
-        AsteroidSprite testAsteroid4 = new AsteroidSprite(250, -900, 100, asteroidImage, 700);
-        obstacleList.add(testAsteroid);
-        obstacleList.add(testAsteroid2);
-        obstacleList.add(testAsteroid3);
-        obstacleList.add(testAsteroid4);
-        */
+        Image fuelIndicatorImage = new Image("resources/arrow.png",23,20,true,true);
+        this.fuelIndicator = new FuelIndicatorSprite(516,393,fuelIndicatorImage,10);
     }
 
     public void setView(gameViewRevised view) {
         this.view = view;
     }
 
+    /*
+     * Runs the timer that manages the game
+     */
     public void runTimer() {
-        //Timer for game
         LongProperty lastUpdateTime = new SimpleLongProperty();
         AnimationTimer gameTimer = new AnimationTimer() {
             @Override
@@ -85,42 +74,24 @@ public class GameModel {
                     //increment time
                     time += elapsedTime;
 
-                    //Check if spaceship should be immune
+                    //Checks if spaceship should still be immune
                     if (spaceship.isImmune() && immuneTime + 1.5 < time) {
-                        Image shipImage = new Image("resources/ship.png", 60, 80, true, true);
-                        spaceship.setImage(shipImage);
-                        spaceship.setImmune(false);
+                        removeImmunity();
                     }
 
                     //Move spaceship and fuel indicator
                     spaceship.updatePositionX(elapsedTime);
                     fuelIndicator.updatePositionY(elapsedTime);
 
+                    updateFuel();
+                    checkFuel(this);
+
                     //Move existing obstacles
                     for (AsteroidSprite obstacle : obstacleList) {
                         obstacle.updatePositionY(elapsedTime);
                     }
-                    //Remove obstacles that are off screen and check for collisions
-                    Iterator<AsteroidSprite> obstacleIterator = obstacleList.iterator();
-                    while (obstacleIterator.hasNext()) {
-                        AsteroidSprite obstacle = obstacleIterator.next();
-                        if (obstacle.isBelowScreen()) {
-                            obstacleIterator.remove();
-                        }
-                        if (spaceship.intersects(obstacle) && !spaceship.isImmune()) {
 
-                            spaceship.changeLives(-1);
-                            if (spaceship.getLives() < 0) {
-                                Image explosion = new Image("resources/explosion.png", 60, 80, true, true);
-                                spaceship.setImage(explosion);
-                            } else {
-                                spaceship.setImmune(true);
-                                Image immuneImage = new Image("resources/temporaryImmune.png", 60, 80, true, true);
-                                spaceship.setImage(immuneImage);
-                                immuneTime = time;
-                            }
-                        }
-                    }
+                    checkCollisions(this);
 
                     //Generate asteroids every 2 time-units
                     if (lastObstacleGenerationTime + 2 < time) {
@@ -137,6 +108,77 @@ public class GameModel {
         gameTimer.start();
 
     }
+
+    /*
+     * Remove obstacles that are off screen and check for collisions
+     */
+    private void checkCollisions(AnimationTimer gameTimer) {
+        Iterator<AsteroidSprite> obstacleIterator = obstacleList.iterator();
+        while (obstacleIterator.hasNext()) {
+            AsteroidSprite obstacle = obstacleIterator.next();
+            if (obstacle.isBelowScreen()) {
+                obstacleIterator.remove();
+            }
+            if (spaceship.intersects(obstacle) && !spaceship.isImmune()) {
+                collision(gameTimer);
+            }
+        }
+    }
+    /*
+     * Handles collisions with obstacles
+     */
+    private void collision(AnimationTimer gameTimer) {
+        spaceship.changeLives(-1);
+        if (spaceship.getLives() < 0) {
+            gameOver(gameTimer);
+        } else {
+            spaceship.setImmune(true);
+            Image immuneImage = new Image("resources/temporaryImmune.png", 60, 80, true, true);
+            spaceship.setImage(immuneImage);
+            immuneTime = time;
+        }
+    }
+
+    /*
+     * Updates the fuel variable within spaceship based on position of fuel indicator
+     */
+    //TODO fix this method; might not be best way to link fuel indicator and fuel variable
+    private void updateFuel() {
+        double fuelPosition = fuelIndicator.getPositionY();
+        //Note that position 693 means fuel is empty and 393 means it is full
+        //This should be made more abstract
+        //Also arrow goes to far below screen before game over
+        double fuelValue = 100 - (fuelPosition - 393)/3;
+        spaceship.setFuel(fuelValue);
+    }
+
+    /*
+     * Checks whether the fuel is empty
+     */
+    private void checkFuel(AnimationTimer gameTimer) {
+        if (spaceship.getFuel() <= 0) {
+            gameOver(gameTimer);
+        }
+    }
+
+    /*
+     * Makes the ship not immune
+     */
+    private void removeImmunity() {
+        Image shipImage = new Image("resources/ship.png", 60, 80, true, true);
+        spaceship.setImage(shipImage);
+        spaceship.setImmune(false);
+    }
+
+    /*
+     * Ends the game.
+     */
+    private void gameOver(AnimationTimer gameTimer) {
+        Image explosion = new Image("resources/explosion.png", 60, 80, true, true);
+        spaceship.setImage(explosion);
+        gameTimer.stop();
+    }
+
     //TODO implement this method
     /*
      * Generates obstacle sprites that are added to obstacleList
