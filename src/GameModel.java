@@ -3,6 +3,7 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -55,6 +56,7 @@ public class GameModel {
         this.spaceship = new ShipSprite(250, 600, shipImage, 100, 3);
         Image fuelIndicatorImage = new Image("resources/arrow.png",23,20,true,true);
         this.fuelIndicator = new FuelIndicatorSprite(516,393,fuelIndicatorImage,10);
+
     }
 
     public void setView(gameViewRevised view) {

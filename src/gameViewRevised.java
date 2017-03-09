@@ -22,6 +22,7 @@ public class gameViewRevised extends Application{
     static Stage gameStage = new Stage();
     private Scene gameScene;
 
+
     private gameController controller;
     private GameModel model;
     GraphicsContext graphics;
@@ -31,12 +32,18 @@ public class gameViewRevised extends Application{
 
     //Placeholders for actual game implementation where background is moving
     private int backgroundWidth = canvasWidth;
-    private int backgroundHeight = 4000;
+//    4000
+    private int backgroundHeight = 0;
     private int backgroundXCoord = 0;
-    public int backgroundYCoord = -2290;
+//    -2290
+    public double backgroundYCoord = -5280;
+    double spaceBound = -700;
+    double earthMovement = .7;
+    double spaceMovement = .1;
 
     //Items here are public for now because we may need to modify them later
     public Image background;
+    public Image space;
     //public Image ship;
     public Image fuel;
     //public Image asteroid;
@@ -69,9 +76,10 @@ public class gameViewRevised extends Application{
      * Constructs the images to be used in the background.
      */
     private void createImages() {
-        background = new Image("resources/gameBackgroundGround.png", backgroundWidth, backgroundHeight, true, true);
+        background = new Image("resources/gameBackground.png", backgroundWidth, backgroundHeight, true, true);
         fuel = new Image("resources/fuel.png", 30, 50, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
+        space = new Image("resources/planetaryBackground.png", backgroundWidth, backgroundHeight, true, true);
     }
 
     /*
@@ -149,7 +157,21 @@ public class gameViewRevised extends Application{
      * Draws the background images. Temporary method, will be implemented in controller once background is changing.
      */
     private void drawBackgroundImages(Image background, Image fuel, Image fuelGauge) {
-        graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
+
+        if (backgroundYCoord < 0){
+            graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
+            backgroundYCoord = backgroundYCoord + earthMovement;
+            System.out.println(backgroundYCoord);
+        }
+        else if (backgroundYCoord < -4000){
+            graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
+            backgroundYCoord = backgroundYCoord + 1.1;
+
+        }
+        else{
+            graphics.drawImage(space, backgroundXCoord, spaceBound);
+            spaceBound = spaceBound + spaceMovement;
+        }
 //        the x and y placement of these units are only temporary
         graphics.drawImage(fuel, 250, 250);
         graphics.drawImage(fuelGauge,530, 400);
