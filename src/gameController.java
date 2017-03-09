@@ -29,6 +29,6 @@ public class gameController {
     }
 
     public void arrowKeyReleased() {
-        model.stopShipMovement();
+//        model.stopShipMovement();
     }
 }

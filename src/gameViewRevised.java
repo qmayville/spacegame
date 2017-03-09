@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -88,7 +89,8 @@ public class gameViewRevised extends Application{
     private void setup() {
         gameStage.setTitle("Space Adventurer");
         Group root = new Group();
-        gameScene = new Scene(root);
+        gameScene = new Scene(root, canvasWidth, canvasHeight, Color.BLACK);
+//        gameScene.getStylesheets().addAll(this.getClass().getResource("gameViewStyle.css").toExternalForm());
         gameStage.setScene(gameScene);
         Canvas canvas = new Canvas(canvasWidth, canvasHeight);
         root.getChildren().add(canvas);
@@ -158,14 +160,14 @@ public class gameViewRevised extends Application{
      */
     private void drawBackgroundImages(Image background, Image fuel, Image fuelGauge) {
 
-        if (backgroundYCoord < 0){
+        if (backgroundYCoord < -5100){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
-            backgroundYCoord = backgroundYCoord + earthMovement;
+            backgroundYCoord = backgroundYCoord + 5;
             System.out.println(backgroundYCoord);
         }
-        else if (backgroundYCoord < -4000){
+        else if (backgroundYCoord < 0){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
-            backgroundYCoord = backgroundYCoord + 1.1;
+            backgroundYCoord = backgroundYCoord + earthMovement;
 
         }
         else{
