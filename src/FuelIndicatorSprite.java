@@ -6,9 +6,8 @@ import javafx.scene.image.Image;
 public class FuelIndicatorSprite extends AbstractSprite {
     private static final double MIN_Y = 400;
 
-    public FuelIndicatorSprite(double PositionX, double PositionY, Image image,double velocityY) {
+    public FuelIndicatorSprite(double PositionX, double PositionY, Image image) {
         super(PositionX, PositionY, image);
-        setVelocityY(velocityY);
     }
 
     private void boundY() {

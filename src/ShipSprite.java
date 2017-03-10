@@ -32,7 +32,7 @@ public class ShipSprite extends AbstractSprite {
     }
 
     public void setFuel(double fuelValue){
-        fuel += fuelValue;
+        fuel = fuelValue;
         if (fuel > 100){
             fuel = 100;
         }

@@ -51,11 +51,13 @@ public class GameModel {
         return obstacleList;
     }
 
+    public ArrayList<BonusSprite> getBonusList() { return bonusList; }
+
     public void initialize() {
         Image shipImage = new Image("resources/ship.png", 60, 80, true, true);
         this.spaceship = new ShipSprite(250, 600, shipImage, 100, 3);
         Image fuelIndicatorImage = new Image("resources/arrow.png",23,20,true,true);
-        this.fuelIndicator = new FuelIndicatorSprite(516,393,fuelIndicatorImage,10);
+        this.fuelIndicator = new FuelIndicatorSprite(516,393,fuelIndicatorImage);
 
     }
 
@@ -98,10 +100,10 @@ public class GameModel {
                     }
 
                     //Check for collisions
-                    checkCollisions(this);
+                    checkObstacleCollisions(this);
 
                     //Check if bonuses are below screen
-                    checkBonuses();
+                    checkBonusCollisions();
 
                     //Generate asteroids every 2 time-units
                     if (lastObstacleGenerationTime + 2 < time) {
@@ -121,9 +123,11 @@ public class GameModel {
 
     }
 
-    public ArrayList<BonusSprite> getBonusList() {
-        return bonusList;
-    }
+
+    /*
+     * Generates bonuses
+     */
+    //TODO implement this method
     private void generateBonus(){
         //Temporary basic implementation generates one fuel
         int positionX = randomNumberGenerator.nextInt(460);
@@ -136,6 +140,9 @@ public class GameModel {
         }
     }
 
+    /*
+     * Returns true if the given bonus does not intersect any asteroids.
+     */
     private boolean noIntersect(BonusSprite bonus) {
         for (AsteroidSprite obstacle : obstacleList) {
             if (bonus.intersects(obstacle)) {
@@ -145,7 +152,10 @@ public class GameModel {
         return true;
     }
 
-    private void checkBonuses() {
+    /*
+     * Checks whether bonuses are below screen or if spaceship has collided with them
+     */
+    private void checkBonusCollisions() {
         Iterator<BonusSprite> bonusIterator = bonusList.iterator();
         while (bonusIterator.hasNext()) {
             BonusSprite bonus = bonusIterator.next();
@@ -159,21 +169,27 @@ public class GameModel {
         }
     }
 
+    /*
+     * Performs the specified bonus action
+     */
     private void giveBonus(String bonusType) {
         if (bonusType.equals("extraLife")) {
             spaceship.changeLives(1);
         }
         if (bonusType.equals("fuel")) {
+            /*
             spaceship.setFuel(spaceship.getFuel() + 20);
             double fuelValue = spaceship.getFuel();
-            fuelIndicator.setPositionY(3*(100 - fuelValue) + 393);
+            fuelIndicator.setPositionY(693 - (3*fuelValue));
+            */
+            spaceship.setFuel(spaceship.getFuel() + 20);
         }
     }
 
     /*
      * Remove obstacles that are off screen and check for collisions
      */
-    private void checkCollisions(AnimationTimer gameTimer) {
+    private void checkObstacleCollisions(AnimationTimer gameTimer) {
         Iterator<AsteroidSprite> obstacleIterator = obstacleList.iterator();
         while (obstacleIterator.hasNext()) {
             AsteroidSprite obstacle = obstacleIterator.next();
@@ -201,16 +217,12 @@ public class GameModel {
     }
 
     /*
-     * Updates the fuel variable within spaceship based on position of fuel indicator
+     * Updates the fuel and fuel indicator
      */
-    //TODO fix this method; might not be best way to link fuel indicator and fuel variable
     private void updateFuel() {
-        double fuelPosition = fuelIndicator.getPositionY();
-        //Note that position 693 means fuel is empty and 393 means it is full
-        //This should be made more abstract
-        //Also arrow goes to far below screen before game over
-        double fuelValue = 100 - (fuelPosition - 393)/3;
-        spaceship.setFuel(fuelValue);
+        spaceship.updateFuel(-.06);
+        double fuel = spaceship.getFuel();
+        fuelIndicator.setPositionY(693 - (3 * fuel));
     }
 
     /*
