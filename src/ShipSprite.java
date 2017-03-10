@@ -45,6 +45,9 @@ public class ShipSprite extends AbstractSprite {
 
     public void changeLives(int changeLivesValue) {
         lives += changeLivesValue;
+        if (lives > 4){
+            lives = 4;
+        }
     }
 
     @Override

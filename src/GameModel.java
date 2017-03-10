@@ -72,7 +72,7 @@ public class GameModel {
         lifeUsedImage = new Image("resources/heartUsed.png", 30, 30, true, true);
 
         for(int i = 0; i < 4; i++){
-            double positionX = 200 + i*50;
+            double positionX = 300 + i*50;
             LifeIndicatorSprite indicator = new LifeIndicatorSprite(positionX, 10, lifeImage, lifeUsedImage);
             lifeIndicatorList.add(indicator);
 
@@ -91,11 +91,15 @@ public class GameModel {
         return obstacleList;
     }
 
+    public ArrayList<LifeIndicatorSprite> getLifeIndicatorList() {
+        return lifeIndicatorList;
+    }
+
 
     public ArrayList<BonusSprite> getBonusList() { return bonusList; }
 
     public void initialize() {
-        this.spaceship = new ShipSprite(250, 600, shipImage1, 100, 3);
+        this.spaceship = new ShipSprite(250, 600, shipImage1, 100, 4);
         Image fuelIndicatorImage = new Image("resources/arrow.png",23,20,true,true);
         this.fuelIndicator = new FuelIndicatorSprite(516,393,fuelIndicatorImage);
 
@@ -103,6 +107,17 @@ public class GameModel {
 
     public void setView(gameViewRevised view) {
         this.view = view;
+    }
+
+    private void setLifeIndicators(int lives){
+        for(int i = lifeIndicatorList.size()-1; i >= 0; i --){
+            if(i >= lifeIndicatorList.size() - lives) {
+                lifeIndicatorList.get(i).turnOn();
+            }
+            else{
+                lifeIndicatorList.get(i).turnOff();
+            }
+        }
     }
 
     /*
@@ -271,6 +286,8 @@ public class GameModel {
             }
             if (spaceship.intersects(bonus)) {
                 giveBonus(bonus.getBonusType());
+                setLifeIndicators(spaceship.getLives());
+
                 bonusIterator.remove();
             }
         }
@@ -300,6 +317,7 @@ public class GameModel {
             }
             if (spaceship.intersects(obstacle) && !spaceship.isImmune()) {
                 collision(gameTimer);
+                setLifeIndicators(spaceship.getLives());
             }
         }
     }
@@ -308,7 +326,7 @@ public class GameModel {
      */
     private void collision(AnimationTimer gameTimer) {
         spaceship.changeLives(-1);
-        if (spaceship.getLives() < 0) {
+        if (spaceship.getLives() <= 0) {
             gameOver(gameTimer);
         } else {
             spaceship.setImmune(true);
@@ -359,6 +377,7 @@ public class GameModel {
      * Generates obstacle sprites that are added to obstacleList
      */
     private void generateObstacles() {
+        //TODO: check asteroids doint' intersect bonuses
         //Temporary basic implementation generates one asteroid at a time
         int positionX = randomNumberGenerator.nextInt(229);
         int positionX2 = (randomNumberGenerator.nextInt(230) + 230);
@@ -402,5 +421,6 @@ public class GameModel {
     public void stopShipMovement() {
         spaceship.setVelocityX(0);
     }
+
 
 }

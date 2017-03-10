@@ -136,6 +136,7 @@ public class gameViewRevised extends Application{
         drawFuelIndicator();
         drawBonus();
         drawScore();
+        drawLifeIndicators();
     }
 
     private void drawBonus() {
@@ -155,6 +156,17 @@ public class gameViewRevised extends Application{
         double fuelIndicatorPositionY = fuelIndicator.getPositionY();
         graphics.drawImage( fuelIndicatorImage, fuelIndicatorPositionX, fuelIndicatorPositionY);
     }
+
+    private void drawLifeIndicators() {
+        ArrayList<LifeIndicatorSprite> indicators = model.getLifeIndicatorList();
+        for (LifeIndicatorSprite indicator : indicators) {
+            Image indicatorImage = indicator.getImage();
+            double indicatorPositionX = indicator.getPositionX();
+            double indicatorPositionY = indicator.getPositionY();
+            graphics.drawImage(indicatorImage, indicatorPositionX, indicatorPositionY);
+        }
+    }
+
 
     public void drawSpaceship() {
         ShipSprite spaceship = model.getSpaceship();
@@ -199,12 +211,12 @@ public class gameViewRevised extends Application{
 
         if (backgroundYCoord < -5100){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
-            backgroundYCoord = backgroundYCoord + 5;
+            backgroundYCoord = backgroundYCoord + earthMovement;
             //System.out.println(backgroundYCoord);
         }
         else if (backgroundYCoord < 0){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
-            backgroundYCoord = backgroundYCoord + 5;
+            backgroundYCoord = backgroundYCoord + earthMovement/2;
 
         }
         else if (backgroundYCoord > -5101 && spaceBound < -200){
