@@ -38,7 +38,7 @@ public class gameViewRevised extends Application{
     private int backgroundXCoord = 0;
     //    -2290
     public double backgroundYCoord = -5280;
-    double spaceBound = -700;
+    double spaceBound = -800;
     double earthMovement = .7;
     double spaceMovement = .1;
 
@@ -79,7 +79,7 @@ public class gameViewRevised extends Application{
     private void createImages() {
         background = new Image("resources/gameBackground.png", backgroundWidth, backgroundHeight, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
-        space = new Image("resources/planetaryBackground.png", backgroundWidth, backgroundHeight, true, true);
+        space = new Image("resources/starryPlanetBackGround.png", backgroundWidth, backgroundHeight, true, true);
     }
 
     /*
@@ -166,8 +166,9 @@ public class gameViewRevised extends Application{
             Image obstacleImage = obstacle.getImage();
             double obstaclePositionX = obstacle.getPositionX();
             double obstaclePositionY = obstacle.getPositionY();
-            graphics.drawImage( obstacleImage, obstaclePositionX, obstaclePositionY);
+            graphics.drawImage(obstacleImage, obstaclePositionX, obstaclePositionY);
         }
+    }
     /*
      * updates life indicators.
      */
@@ -199,9 +200,13 @@ public class gameViewRevised extends Application{
             backgroundYCoord = backgroundYCoord + earthMovement;
 
         }
-        else{
+        else if (backgroundYCoord > -5101 && spaceBound < -200){
             graphics.drawImage(space, backgroundXCoord, spaceBound);
             spaceBound = spaceBound + spaceMovement;
+            System.out.println(spaceBound);
+        }
+        else {
+            graphics.drawImage(space, backgroundXCoord, spaceBound);
         }
 //        the x and y placement of these units are only temporary
         graphics.drawImage(fuelGauge,530, 400);
