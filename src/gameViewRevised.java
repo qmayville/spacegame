@@ -173,7 +173,7 @@ public class gameViewRevised extends Application{
         if (backgroundYCoord < -5100){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
             backgroundYCoord = backgroundYCoord + 5;
-            System.out.println(backgroundYCoord);
+            //System.out.println(backgroundYCoord);
         }
         else if (backgroundYCoord < 0){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);

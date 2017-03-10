@@ -3,6 +3,7 @@ import javafx.scene.image.Image;
 /**
  * Created by mayvilleq on 3/9/17.
  */
+
 public class BonusSprite extends AsteroidSprite {
     private String bonusType;
 

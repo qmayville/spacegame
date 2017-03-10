@@ -24,6 +24,8 @@ public class GameModel {
     private double score;
     private double immuneTime;
     private double lastObstacleGenerationTime;
+    private double lastFuelGenerationTime;
+    private double lastBonusGenerationTime;
     private gameViewRevised view;
     private Random randomNumberGenerator = new Random();
 
@@ -32,8 +34,12 @@ public class GameModel {
         this.height = 0;
         this.time = 0;
         this.score = 0;
-        this.immuneTime = -1.5;
-        this.lastObstacleGenerationTime = -2;
+        this.immuneTime = -5;
+        //These can be changed to manipulate when the first generation of each occurs
+        //The lower the number, the earlier it happens
+        this.lastObstacleGenerationTime = -5;
+        this.lastFuelGenerationTime = -1;
+        this.lastBonusGenerationTime = 1;
 
         obstacleList = new ArrayList<>();
         bonusList = new ArrayList<>();
@@ -108,10 +114,21 @@ public class GameModel {
                     //Generate asteroids every 2 time-units
                     if (lastObstacleGenerationTime + 2 < time) {
                         generateObstacles();
-                        //Generate bonuses should be moved into separate time statement
-                        generateBonus();
                         lastObstacleGenerationTime = time;
                     }
+
+                    //Generate fuel every 10.4 time-units
+                    if (lastFuelGenerationTime + 7.4 < time) {
+                        generateFuel();
+                        lastFuelGenerationTime = time;
+                    }
+
+                    //Generate bonus every 24.7 time-units
+                    if (lastBonusGenerationTime + 24.7 < time) {
+                        generateBonus();
+                        lastBonusGenerationTime = time;
+                    }
+
 
                     //TODO fuel, scorekeeping, bonuses
                     view.update();
@@ -123,29 +140,45 @@ public class GameModel {
 
     }
 
+    private void generateBonus() {
+        //Temporary implementation only generates life bonuses. Was thinking we could randomize which bonus it generates
+        int positionX = randomNumberGenerator.nextInt(460);
+        Image bonusImage = new Image("resources/heart.png", 30, 50, true, true);
+        BonusSprite bonus = new BonusSprite(positionX, -100, 100, bonusImage, 700, "life");
+        if (noIntersect(bonus)) {
+            bonusList.add(bonus);
+        } else {
+            generateBonus();
+        }
+    }
+
 
     /*
-     * Generates bonuses
+     * Generates fuel
      */
-    //TODO implement this method
-    private void generateBonus(){
-        //Temporary basic implementation generates one fuel
+    private void generateFuel(){
         int positionX = randomNumberGenerator.nextInt(460);
         Image fuelImage = new Image("resources/fuel.png", 30, 50, true, true);
         BonusSprite fuelBonus = new BonusSprite(positionX, -100, 100, fuelImage, 700, "fuel");
         if (noIntersect(fuelBonus)) {
             bonusList.add(fuelBonus);
         } else {
-            generateBonus();
+            generateFuel();
         }
     }
 
     /*
-     * Returns true if the given bonus does not intersect any asteroids.
+     * Returns true if the given bonus does not intersect any asteroids or bonuses.
      */
+    //TODO check if this method works. I saw a bonus intersect with an asteroid, but when I purposely caused an intersection to test this then the method prevented it
     private boolean noIntersect(BonusSprite bonus) {
         for (AsteroidSprite obstacle : obstacleList) {
             if (bonus.intersects(obstacle)) {
+                return false;
+            }
+        }
+        for (BonusSprite otherBonus : bonusList) {
+            if (bonus.intersects(otherBonus)) {
                 return false;
             }
         }
@@ -173,15 +206,10 @@ public class GameModel {
      * Performs the specified bonus action
      */
     private void giveBonus(String bonusType) {
-        if (bonusType.equals("extraLife")) {
+        if (bonusType.equals("life")) {
             spaceship.changeLives(1);
         }
         if (bonusType.equals("fuel")) {
-            /*
-            spaceship.setFuel(spaceship.getFuel() + 20);
-            double fuelValue = spaceship.getFuel();
-            fuelIndicator.setPositionY(693 - (3*fuelValue));
-            */
             spaceship.setFuel(spaceship.getFuel() + 20);
         }
     }
@@ -220,7 +248,7 @@ public class GameModel {
      * Updates the fuel and fuel indicator
      */
     private void updateFuel() {
-        spaceship.updateFuel(-.06);
+        spaceship.updateFuel(-.04);
         double fuel = spaceship.getFuel();
         fuelIndicator.setPositionY(693 - (3 * fuel));
     }
