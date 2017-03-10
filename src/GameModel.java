@@ -29,6 +29,9 @@ public class GameModel {
     private double lastBonusGenerationTime;
     private gameViewRevised view;
     private Random randomNumberGenerator = new Random();
+    private boolean acceleratingPositive;
+    private boolean acceleratingNegative;
+
 
 
     public GameModel(){
@@ -41,6 +44,9 @@ public class GameModel {
         this.lastObstacleGenerationTime = -5;
         this.lastFuelGenerationTime = -1;
         this.lastBonusGenerationTime = 1;
+
+        acceleratingNegative = false;
+        acceleratingPositive = false;
 
         obstacleList = new ArrayList<>();
         obstacleList2 = new ArrayList<>();
@@ -93,6 +99,19 @@ public class GameModel {
                     //Checks if spaceship should still be immune
                     if (spaceship.isImmune() && immuneTime + 1.5 < time) {
                         removeImmunity();
+                    }
+
+                    //accelerate or decelerate ship
+                    if (acceleratingPositive) {
+                        moveShipRight();
+                    }
+
+                    if (acceleratingNegative) {
+                        moveShipLeft();
+                    }
+
+                    if (!acceleratingNegative && !acceleratingNegative){
+                        slowDownShip();
                     }
 
                     //Move spaceship and fuel indicator
@@ -325,12 +344,32 @@ public class GameModel {
 
 
     //TODO change spaceship physics
+    public void startAccelerationPositive(){
+        acceleratingPositive = true;
+    }
+
+    public void startAccelerationNegative(){
+        acceleratingNegative = true;
+    }
+
+    public void stopAccelerationPositive(){
+        acceleratingPositive = false;
+    }
+
+    public void stopAccelerationNegative(){
+        acceleratingNegative = false;
+    }
+
     public void moveShipRight() {
-        spaceship.addVelocityX(50);
+        spaceship.addVelocityX(10);
     }
 
     public void moveShipLeft() {
-        spaceship.addVelocityX(-50);
+        spaceship.addVelocityX(-10);
+    }
+
+    public void slowDownShip() {
+        spaceship.slowDownX(2.5);
     }
 
     public void stopShipMovement() {

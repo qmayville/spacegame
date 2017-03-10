@@ -110,8 +110,10 @@ public class gameViewRevised extends Application{
         gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT) {
-                    controller.arrowKeyReleased();
+                if (event.getCode() == KeyCode.RIGHT) {
+                controller.rightArrowKeyReleased();
+                } else if (event.getCode() == KeyCode.LEFT) {
+                controller.leftArrowKeyReleased();
                 }
             }
         });

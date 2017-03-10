@@ -62,9 +62,11 @@ public class ShipSprite extends AbstractSprite {
     private void boundX() {
         if (getPositionX() > MAX_X) {
             setPositionX(MAX_X);
+            setVelocityX(0);
         }
         if (getPositionX() < MIN_X) {
             setPositionX(MIN_X);
+            setVelocityX(0);
         }
     }
 

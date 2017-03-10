@@ -21,14 +21,15 @@ public class gameController {
 
 
     public void rightArrowKey() {
-        model.moveShipRight();
+        model.startAccelerationPositive();
     }
 
     public void leftArrowKey() {
-        model.moveShipLeft();
+        model.startAccelerationNegative();
     }
 
-    public void arrowKeyReleased() {
-//        model.stopShipMovement();
-    }
+    public void rightArrowKeyReleased() { model.stopAccelerationPositive(); }
+
+    public void leftArrowKeyReleased() { model.stopAccelerationNegative(); }
+
 }
