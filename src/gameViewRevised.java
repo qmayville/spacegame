@@ -196,7 +196,7 @@ public class gameViewRevised extends Application{
         }
         else if (backgroundYCoord < 0){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
-            backgroundYCoord = backgroundYCoord + earthMovement;
+            backgroundYCoord = backgroundYCoord + 5;
 
         }
         else if (backgroundYCoord > -5101 && spaceBound < -200){

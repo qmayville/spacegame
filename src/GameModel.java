@@ -35,6 +35,7 @@ public class GameModel {
     private Image shipImage1;
     private Image shipImage2;
     private Image immuneImage;
+    private Image asteroidImage;
     private int imageNumber;
 
 
@@ -60,6 +61,7 @@ public class GameModel {
         shipImage1 = new Image("resources/toonship_1.png", 60, 80, true, true);
         shipImage2 = new Image("resources/toonship_2.png", 60, 80, true, true);
         immuneImage =new WritableImage(60,80);
+        asteroidImage = new Image("resources/asteroid.png", 70, 70, true, true);
         imageNumber = 1;
     }
 
@@ -343,12 +345,11 @@ public class GameModel {
         //Temporary basic implementation generates one asteroid at a time
         int positionX = randomNumberGenerator.nextInt(229);
         int positionX2 = (randomNumberGenerator.nextInt(230) + 230);
-        Image asteroidImage = new Image("resources/asteroid.png", 70, 70, true, true);
         //TODO make velocity faster as time goes by, make sure velocity is same as backgrounds
-        AsteroidSprite testAsteroid = new AsteroidSprite(positionX, -200, 120, asteroidImage, 700);
-        obstacleList.add(testAsteroid);
-        AsteroidSprite testAsteroid2 = new AsteroidSprite(positionX2, -50, 120, asteroidImage, 700);
-        obstacleList.add(testAsteroid2);
+        AsteroidSprite asteroid1 = new AsteroidSprite(positionX, -200, 120, asteroidImage, 700);
+        obstacleList.add(asteroid1);
+        AsteroidSprite asteroid2 = new AsteroidSprite(positionX2, -50, 120, asteroidImage, 700);
+        obstacleList.add(asteroid2);
     }
 
 
