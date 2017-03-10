@@ -3,6 +3,7 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,10 +27,15 @@ public class GameModel {
     private double lastObstacleGenerationTime;
     private double lastFuelGenerationTime;
     private double lastBonusGenerationTime;
+    private double imageSwitchTime;
     private gameViewRevised view;
     private Random randomNumberGenerator = new Random();
     private boolean acceleratingPositive;
     private boolean acceleratingNegative;
+    private Image shipImage1;
+    private Image shipImage2;
+    private Image immuneImage;
+    private int imageNumber;
 
 
 
@@ -38,6 +44,7 @@ public class GameModel {
         this.time = 0;
         this.score = 0;
         this.immuneTime = -5;
+        this.imageSwitchTime = -5;
         //These can be changed to manipulate when the first generation of each occurs
         //The lower the number, the earlier it happens
         this.lastObstacleGenerationTime = -5;
@@ -49,6 +56,11 @@ public class GameModel {
 
         obstacleList = new ArrayList<>();
         bonusList = new ArrayList<>();
+
+        shipImage1 = new Image("resources/toonship_1.png", 60, 80, true, true);
+        shipImage2 = new Image("resources/toonship_2.png", 60, 80, true, true);
+        immuneImage =new WritableImage(60,80);
+        imageNumber = 1;
     }
 
     public double getScore(){return score;}
@@ -67,8 +79,7 @@ public class GameModel {
     public ArrayList<BonusSprite> getBonusList() { return bonusList; }
 
     public void initialize() {
-        Image shipImage = new Image("resources/ship.png", 60, 80, true, true);
-        this.spaceship = new ShipSprite(250, 600, shipImage, 100, 3);
+        this.spaceship = new ShipSprite(250, 600, shipImage1, 100, 3);
         Image fuelIndicatorImage = new Image("resources/arrow.png",23,20,true,true);
         this.fuelIndicator = new FuelIndicatorSprite(516,393,fuelIndicatorImage);
 
@@ -94,6 +105,14 @@ public class GameModel {
                     //Checks if spaceship should still be immune
                     if (spaceship.isImmune() && immuneTime + 1.5 < time) {
                         removeImmunity();
+                    }
+
+                    //Flicker flames or flicker immunity
+                    if (!spaceship.isImmune()) {
+
+                        flickerImage(shipImage1, shipImage2, .15);
+                    } else {
+                        flickerImage(immuneImage, shipImage2, .2);
                     }
 
                     //accelerate or decelerate ship
@@ -161,6 +180,20 @@ public class GameModel {
         gameTimer.start();
 
     }
+
+    private void flickerImage(Image image1, Image image2, double flickerTime) {
+        if (imageSwitchTime + flickerTime < time) {
+            if (imageNumber == 1) {
+                spaceship.setImage(image2);
+                imageNumber = 2;
+            } else {
+                spaceship.setImage(image1);
+                imageNumber = 1;
+            }
+            imageSwitchTime = time;
+        }
+    }
+
 
     private void generateBonus() {
         //Temporary implementation only generates life bonuses. Was thinking we could randomize which bonus it generates
@@ -260,9 +293,10 @@ public class GameModel {
             gameOver(gameTimer);
         } else {
             spaceship.setImmune(true);
-            Image immuneImage = new Image("resources/temporaryImmune.png", 60, 80, true, true);
             spaceship.setImage(immuneImage);
+            imageNumber = 1;
             immuneTime = time;
+            imageSwitchTime = time;
         }
     }
 
@@ -288,8 +322,7 @@ public class GameModel {
      * Makes the ship not immune
      */
     private void removeImmunity() {
-        Image shipImage = new Image("resources/ship.png", 60, 80, true, true);
-        spaceship.setImage(shipImage);
+        spaceship.setImage(shipImage1);
         spaceship.setImmune(false);
     }
 
