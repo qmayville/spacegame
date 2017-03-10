@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -50,6 +52,8 @@ public class gameViewRevised extends Application{
     //public Image asteroid;
     public Image fuelGauge;
 
+    public String score;
+
 
     public gameViewRevised(gameController controller, GameModel model) {
         super();
@@ -80,6 +84,9 @@ public class gameViewRevised extends Application{
         background = new Image("resources/GameBackGround.png", backgroundWidth, backgroundHeight, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
         space = new Image("resources/starryPlanetBackGround.png", backgroundWidth, backgroundHeight, true, true);
+        //       Sets fill color and font/font size for score
+        graphics.setFill(Color.YELLOW);
+        graphics.setFont(Font.font("Calibri", FontWeight.NORMAL, 20));
     }
 
     /*
@@ -128,6 +135,7 @@ public class gameViewRevised extends Application{
         drawSpaceship();
         drawFuelIndicator();
         drawBonus();
+        drawScore();
     }
 
     private void drawBonus() {
@@ -209,6 +217,14 @@ public class gameViewRevised extends Application{
         }
 //        the x and y placement of these units are only temporary
         graphics.drawImage(fuelGauge,530, 400);
+    }
+
+    /*
+     * Draws the score on the screen
+     */
+    private void drawScore(){
+        score = "Score: " + model.getScore();
+        graphics.fillText(score, 5, 20);
     }
 
 }
