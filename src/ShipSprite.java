@@ -1,3 +1,4 @@
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 /**
@@ -76,5 +77,16 @@ public class ShipSprite extends AbstractSprite {
 
     public void setImmune(boolean immuneValue) {
         this.immune = immuneValue;
+    }
+
+    @Override
+    public Rectangle2D getBoundary() {
+        Rectangle2D rectangle = super.getBoundary();
+        double x = rectangle.getMinX() + 7;
+        double y = rectangle.getMinY() + 2;
+        double width = rectangle.getWidth() -14;
+        double height = rectangle.getHeight() - 23;
+        Rectangle2D modifiedRectangle = new Rectangle2D(x,y,width,height);
+        return modifiedRectangle;
     }
 }
