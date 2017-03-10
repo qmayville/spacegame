@@ -33,10 +33,10 @@ public class gameViewRevised extends Application{
 
     //Placeholders for actual game implementation where background is moving
     private int backgroundWidth = canvasWidth;
-//    4000
+    //    4000
     private int backgroundHeight = 0;
     private int backgroundXCoord = 0;
-//    -2290
+    //    -2290
     public double backgroundYCoord = -5280;
     double spaceBound = -700;
     double earthMovement = .7;
@@ -78,7 +78,6 @@ public class gameViewRevised extends Application{
      */
     private void createImages() {
         background = new Image("resources/gameBackground.png", backgroundWidth, backgroundHeight, true, true);
-        fuel = new Image("resources/fuel.png", 30, 50, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
         space = new Image("resources/planetaryBackground.png", backgroundWidth, backgroundHeight, true, true);
     }
@@ -126,6 +125,17 @@ public class gameViewRevised extends Application{
         drawAsteroids();
         drawSpaceship();
         drawFuelIndicator();
+        drawBonus();
+    }
+
+    private void drawBonus() {
+        ArrayList<BonusSprite> bonusList = model.getBonusList();
+        for (BonusSprite bonus : bonusList) {
+            Image obstacleImage = bonus.getImage();
+            double bonusPositionX = bonus.getPositionX();
+            double bonusPositionY = bonus.getPositionY();
+            graphics.drawImage(obstacleImage, bonusPositionX, bonusPositionY);
+        }
     }
 
     private void drawFuelIndicator() {
@@ -175,7 +185,6 @@ public class gameViewRevised extends Application{
             spaceBound = spaceBound + spaceMovement;
         }
 //        the x and y placement of these units are only temporary
-        graphics.drawImage(fuel, 250, 250);
         graphics.drawImage(fuelGauge,530, 400);
     }
 

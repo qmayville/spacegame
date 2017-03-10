@@ -3,7 +3,6 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +16,7 @@ public class GameModel {
     private ShipSprite spaceship;
     private FuelIndicatorSprite fuelIndicator;
     private ArrayList<AsteroidSprite> obstacleList;
-    // TODO private ArrayList<PowerUpSprite> PowerUpList;
+    private ArrayList<BonusSprite> bonusList;
     // TODO Needs fuel gaugue/indicator
     // TODO needs life indicators and score tracker
     private double height;
@@ -37,6 +36,7 @@ public class GameModel {
         this.lastObstacleGenerationTime = -2;
 
         obstacleList = new ArrayList<>();
+        bonusList = new ArrayList<>();
     }
 
     public double getScore(){return score;}
@@ -92,12 +92,22 @@ public class GameModel {
                     for (AsteroidSprite obstacle : obstacleList) {
                         obstacle.updatePositionY(elapsedTime);
                     }
+                    //Move existing bonuses
+                    for (BonusSprite bonus : bonusList) {
+                        bonus.updatePositionY(elapsedTime);
+                    }
 
+                    //Check for collisions
                     checkCollisions(this);
+
+                    //Check if bonuses are below screen
+                    checkBonuses();
 
                     //Generate asteroids every 2 time-units
                     if (lastObstacleGenerationTime + 2 < time) {
                         generateObstacles();
+                        //Generate bonuses should be moved into separate time statement
+                        generateBonus();
                         lastObstacleGenerationTime = time;
                     }
 
@@ -109,6 +119,55 @@ public class GameModel {
         };
         gameTimer.start();
 
+    }
+
+    public ArrayList<BonusSprite> getBonusList() {
+        return bonusList;
+    }
+    private void generateBonus(){
+        //Temporary basic implementation generates one fuel
+        int positionX = randomNumberGenerator.nextInt(460);
+        Image fuelImage = new Image("resources/fuel.png", 30, 50, true, true);
+        BonusSprite fuelBonus = new BonusSprite(positionX, -100, 100, fuelImage, 700, "fuel");
+        if (noIntersect(fuelBonus)) {
+            bonusList.add(fuelBonus);
+        } else {
+            generateBonus();
+        }
+    }
+
+    private boolean noIntersect(BonusSprite bonus) {
+        for (AsteroidSprite obstacle : obstacleList) {
+            if (bonus.intersects(obstacle)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void checkBonuses() {
+        Iterator<BonusSprite> bonusIterator = bonusList.iterator();
+        while (bonusIterator.hasNext()) {
+            BonusSprite bonus = bonusIterator.next();
+            if (bonus.isBelowScreen()) {
+                bonusIterator.remove();
+            }
+            if (spaceship.intersects(bonus)) {
+                giveBonus(bonus.getBonusType());
+                bonusIterator.remove();
+            }
+        }
+    }
+
+    private void giveBonus(String bonusType) {
+        if (bonusType.equals("extraLife")) {
+            spaceship.changeLives(1);
+        }
+        if (bonusType.equals("fuel")) {
+            spaceship.setFuel(spaceship.getFuel() + 20);
+            double fuelValue = spaceship.getFuel();
+            fuelIndicator.setPositionY(3*(100 - fuelValue) + 393);
+        }
     }
 
     /*
