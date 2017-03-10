@@ -61,7 +61,7 @@ public class GameModel {
         shipImage1 = new Image("resources/toonship_1.png", 60, 80, true, true);
         shipImage2 = new Image("resources/toonship_2.png", 60, 80, true, true);
         immuneImage =new WritableImage(60,80);
-        asteroidImage = new Image("resources/asteroid.png", 70, 70, true, true);
+        asteroidImage = new Image("resources/asteroidFalling.png", 70, 70, true, true);
         imageNumber = 1;
     }
 
