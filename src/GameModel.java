@@ -16,7 +16,6 @@ public class GameModel {
     private ShipSprite spaceship;
     private FuelIndicatorSprite fuelIndicator;
     private ArrayList<AsteroidSprite> obstacleList;
-    private ArrayList<AsteroidSprite> obstacleList2;
     private ArrayList<BonusSprite> bonusList;
     // TODO Needs fuel gaugue/indicator
     // TODO needs life indicators and score tracker
@@ -49,7 +48,6 @@ public class GameModel {
         acceleratingPositive = false;
 
         obstacleList = new ArrayList<>();
-        obstacleList2 = new ArrayList<>();
         bonusList = new ArrayList<>();
     }
 
@@ -65,9 +63,6 @@ public class GameModel {
         return obstacleList;
     }
 
-    public ArrayList<AsteroidSprite> getObstacleLis2t() {
-        return obstacleList2;
-    }
 
     public ArrayList<BonusSprite> getBonusList() { return bonusList; }
 
@@ -126,10 +121,6 @@ public class GameModel {
                         obstacle.updatePositionY(elapsedTime);
                     }
 
-                    //Move existing obstacles
-                    for (AsteroidSprite obstacle : obstacleList2) {
-                        obstacle.updatePositionY(elapsedTime);
-                    }
 
                     //Move existing bonuses
                     for (BonusSprite bonus : bonusList) {
@@ -175,7 +166,7 @@ public class GameModel {
         //Temporary implementation only generates life bonuses. Was thinking we could randomize which bonus it generates
         int positionX = randomNumberGenerator.nextInt(460);
         Image bonusImage = new Image("resources/heart.png", 30, 50, true, true);
-        BonusSprite bonus = new BonusSprite(positionX, -100, 100, bonusImage, 700, "life");
+        BonusSprite bonus = new BonusSprite(positionX, -100, 120, bonusImage, 700, "life");
         if (noIntersect(bonus)) {
             bonusList.add(bonus);
         } else {
@@ -190,7 +181,7 @@ public class GameModel {
     private void generateFuel(){
         int positionX = randomNumberGenerator.nextInt(460);
         Image fuelImage = new Image("resources/fuel.png", 30, 50, true, true);
-        BonusSprite fuelBonus = new BonusSprite(positionX, -100, 100, fuelImage, 700, "fuel");
+        BonusSprite fuelBonus = new BonusSprite(positionX, -100, 120, fuelImage, 700, "fuel");
         if (noIntersect(fuelBonus)) {
             bonusList.add(fuelBonus);
         } else {
@@ -204,11 +195,6 @@ public class GameModel {
     //TODO check if this method works. I saw a bonus intersect with an asteroid, but when I purposely caused an intersection to test this then the method prevented it
     private boolean noIntersect(BonusSprite bonus) {
         for (AsteroidSprite obstacle : obstacleList) {
-            if (bonus.intersects(obstacle)) {
-                return false;
-            }
-        }
-        for (AsteroidSprite obstacle : obstacleList2) {
             if (bonus.intersects(obstacle)) {
                 return false;
             }
@@ -255,20 +241,10 @@ public class GameModel {
      */
     private void checkObstacleCollisions(AnimationTimer gameTimer) {
         Iterator<AsteroidSprite> obstacleIterator = obstacleList.iterator();
-        Iterator<AsteroidSprite> obstacleIterator2 = obstacleList2.iterator();
         while (obstacleIterator.hasNext()) {
             AsteroidSprite obstacle = obstacleIterator.next();
             if (obstacle.isBelowScreen()) {
                 obstacleIterator.remove();
-            }
-            if (spaceship.intersects(obstacle) && !spaceship.isImmune()) {
-                collision(gameTimer);
-            }
-        }
-        while (obstacleIterator2.hasNext()) {
-            AsteroidSprite obstacle = obstacleIterator2.next();
-            if (obstacle.isBelowScreen()) {
-                obstacleIterator2.remove();
             }
             if (spaceship.intersects(obstacle) && !spaceship.isImmune()) {
                 collision(gameTimer);
@@ -339,7 +315,7 @@ public class GameModel {
         AsteroidSprite testAsteroid = new AsteroidSprite(positionX, -200, 120, asteroidImage, 700);
         obstacleList.add(testAsteroid);
         AsteroidSprite testAsteroid2 = new AsteroidSprite(positionX2, -50, 120, asteroidImage, 700);
-        obstacleList2.add(testAsteroid2);
+        obstacleList.add(testAsteroid2);
     }
 
 
@@ -376,7 +352,4 @@ public class GameModel {
         spaceship.setVelocityX(0);
     }
 
-    public ArrayList<AsteroidSprite> getObstacleList2() {
-        return obstacleList2;
-    }
 }

@@ -77,7 +77,7 @@ public class gameViewRevised extends Application{
      * Constructs the images to be used in the background.
      */
     private void createImages() {
-        background = new Image("resources/gameBackground.png", backgroundWidth, backgroundHeight, true, true);
+        background = new Image("resources/GameBackGround.png", backgroundWidth, backgroundHeight, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
         space = new Image("resources/starryPlanetBackGround.png", backgroundWidth, backgroundHeight, true, true);
     }
@@ -161,7 +161,6 @@ public class gameViewRevised extends Application{
      */
     public void drawAsteroids() {
         ArrayList<AsteroidSprite> obstacleList = model.getObstacleList();
-        ArrayList<AsteroidSprite> obstacleList2 = model.getObstacleList2();
         for (AsteroidSprite obstacle : obstacleList) {
             Image obstacleImage = obstacle.getImage();
             double obstaclePositionX = obstacle.getPositionX();
