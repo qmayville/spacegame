@@ -343,7 +343,7 @@ public class GameModel {
     }
 
 
-    //TODO change spaceship physics
+
     public void startAccelerationPositive(){
         acceleratingPositive = true;
     }
