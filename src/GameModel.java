@@ -16,6 +16,7 @@ public class GameModel {
     private ShipSprite spaceship;
     private FuelIndicatorSprite fuelIndicator;
     private ArrayList<AsteroidSprite> obstacleList;
+    private ArrayList<AsteroidSprite> obstacleList2;
     private ArrayList<BonusSprite> bonusList;
     // TODO Needs fuel gaugue/indicator
     // TODO needs life indicators and score tracker
@@ -42,6 +43,7 @@ public class GameModel {
         this.lastBonusGenerationTime = 1;
 
         obstacleList = new ArrayList<>();
+        obstacleList2 = new ArrayList<>();
         bonusList = new ArrayList<>();
     }
 
@@ -55,6 +57,10 @@ public class GameModel {
 
     public ArrayList<AsteroidSprite> getObstacleList() {
         return obstacleList;
+    }
+
+    public ArrayList<AsteroidSprite> getObstacleLis2t() {
+        return obstacleList2;
     }
 
     public ArrayList<BonusSprite> getBonusList() { return bonusList; }
@@ -100,6 +106,12 @@ public class GameModel {
                     for (AsteroidSprite obstacle : obstacleList) {
                         obstacle.updatePositionY(elapsedTime);
                     }
+
+                    //Move existing obstacles
+                    for (AsteroidSprite obstacle : obstacleList2) {
+                        obstacle.updatePositionY(elapsedTime);
+                    }
+
                     //Move existing bonuses
                     for (BonusSprite bonus : bonusList) {
                         bonus.updatePositionY(elapsedTime);
@@ -177,6 +189,11 @@ public class GameModel {
                 return false;
             }
         }
+        for (AsteroidSprite obstacle : obstacleList2) {
+            if (bonus.intersects(obstacle)) {
+                return false;
+            }
+        }
         for (BonusSprite otherBonus : bonusList) {
             if (bonus.intersects(otherBonus)) {
                 return false;
@@ -219,10 +236,20 @@ public class GameModel {
      */
     private void checkObstacleCollisions(AnimationTimer gameTimer) {
         Iterator<AsteroidSprite> obstacleIterator = obstacleList.iterator();
+        Iterator<AsteroidSprite> obstacleIterator2 = obstacleList2.iterator();
         while (obstacleIterator.hasNext()) {
             AsteroidSprite obstacle = obstacleIterator.next();
             if (obstacle.isBelowScreen()) {
                 obstacleIterator.remove();
+            }
+            if (spaceship.intersects(obstacle) && !spaceship.isImmune()) {
+                collision(gameTimer);
+            }
+        }
+        while (obstacleIterator2.hasNext()) {
+            AsteroidSprite obstacle = obstacleIterator2.next();
+            if (obstacle.isBelowScreen()) {
+                obstacleIterator2.remove();
             }
             if (spaceship.intersects(obstacle) && !spaceship.isImmune()) {
                 collision(gameTimer);
@@ -286,11 +313,14 @@ public class GameModel {
      */
     private void generateObstacles() {
         //Temporary basic implementation generates one asteroid at a time
-        int positionX = randomNumberGenerator.nextInt(460);
+        int positionX = randomNumberGenerator.nextInt(229);
+        int positionX2 = (randomNumberGenerator.nextInt(230) + 230);
         Image asteroidImage = new Image("resources/asteroid.png", 70, 70, true, true);
         //TODO make velocity faster as time goes by, make sure velocity is same as backgrounds
-        AsteroidSprite testAsteroid = new AsteroidSprite(positionX, -100, 100, asteroidImage, 700);
+        AsteroidSprite testAsteroid = new AsteroidSprite(positionX, -200, 120, asteroidImage, 700);
         obstacleList.add(testAsteroid);
+        AsteroidSprite testAsteroid2 = new AsteroidSprite(positionX2, -50, 120, asteroidImage, 700);
+        obstacleList2.add(testAsteroid2);
     }
 
 
@@ -305,5 +335,9 @@ public class GameModel {
 
     public void stopShipMovement() {
         spaceship.setVelocityX(0);
+    }
+
+    public ArrayList<AsteroidSprite> getObstacleList2() {
+        return obstacleList2;
     }
 }

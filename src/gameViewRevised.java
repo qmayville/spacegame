@@ -156,13 +156,21 @@ public class gameViewRevised extends Application{
 
     public void drawAsteroids() {
         ArrayList<AsteroidSprite> obstacleList = model.getObstacleList();
+        ArrayList<AsteroidSprite> obstacleList2 = model.getObstacleList2();
         for (AsteroidSprite obstacle : obstacleList) {
             Image obstacleImage = obstacle.getImage();
             double obstaclePositionX = obstacle.getPositionX();
             double obstaclePositionY = obstacle.getPositionY();
             graphics.drawImage( obstacleImage, obstaclePositionX, obstaclePositionY);
         }
+        for (AsteroidSprite obstacle : obstacleList2) {
+            Image obstacleImage = obstacle.getImage();
+            double obstaclePositionX = obstacle.getPositionX();
+            double obstaclePositionY = obstacle.getPositionY();
+            graphics.drawImage( obstacleImage, obstaclePositionX, obstaclePositionY);
+        }
     }
+
 
 
     /*
