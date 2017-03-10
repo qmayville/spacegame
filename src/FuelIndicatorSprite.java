@@ -1,8 +1,11 @@
+
 import javafx.scene.image.Image;
 
 /**
- * Created by mayvilleq on 3/8/17.
+ * Created by casselmacee on 3/9/17.
  */
+
+
 public class FuelIndicatorSprite extends AbstractSprite {
     private static final double MIN_Y = 400;
 

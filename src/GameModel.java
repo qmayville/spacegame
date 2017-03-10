@@ -18,11 +18,12 @@ public class GameModel {
     private FuelIndicatorSprite fuelIndicator;
     private ArrayList<AsteroidSprite> obstacleList;
     private ArrayList<BonusSprite> bonusList;
+    private ArrayList<LifeIndicatorSprite> lifeIndicatorList;
     // TODO Needs fuel gaugue/indicator
     // TODO needs life indicators and score tracker
     private double height;
     private double time;
-    private double score;
+    private int score;
     private double immuneTime;
     private double lastObstacleGenerationTime;
     private double lastFuelGenerationTime;
@@ -36,6 +37,8 @@ public class GameModel {
     private Image shipImage2;
     private Image immuneImage;
     private Image asteroidImage;
+    private Image lifeImage;
+    private Image lifeUsedImage;
     private int imageNumber;
 
 
@@ -57,12 +60,23 @@ public class GameModel {
 
         obstacleList = new ArrayList<>();
         bonusList = new ArrayList<>();
+        lifeIndicatorList = new ArrayList<>();
 
         shipImage1 = new Image("resources/toonship_1.png", 60, 80, true, true);
         shipImage2 = new Image("resources/toonship_2.png", 60, 80, true, true);
         immuneImage =new WritableImage(60,80);
         asteroidImage = new Image("resources/asteroidFalling.png", 70, 70, true, true);
         imageNumber = 1;
+
+        lifeImage = new Image("resources/heart.png", 30, 30, true, true);
+        lifeUsedImage = new Image("resources/heartUsed.png", 30, 30, true, true);
+
+        for(int i = 0; i < 4; i++){
+            double positionX = 200 + i*50;
+            LifeIndicatorSprite indicator = new LifeIndicatorSprite(positionX, 10, lifeImage, lifeUsedImage);
+            lifeIndicatorList.add(indicator);
+
+        }
     }
 
     public double getScore(){return score;}
@@ -100,6 +114,7 @@ public class GameModel {
             @Override
             public void handle(long currentTime) {
                 if (lastUpdateTime.get() > 0) {
+
                     final double elapsedTime = (currentTime - lastUpdateTime.get()) / 1_000_000_000.0;
                     //increment time
                     time += elapsedTime;
@@ -171,6 +186,8 @@ public class GameModel {
                         generateBonus();
                         lastBonusGenerationTime = time;
                     }
+
+                    score = score + 1;
 
 
                     //TODO fuel, scorekeeping, bonuses
