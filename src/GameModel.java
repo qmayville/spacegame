@@ -303,7 +303,6 @@ public class GameModel {
     private void giveBonus(String bonusType) {
         if (bonusType.equals("life")) {
             spaceship.changeLives(1);
-            spaceship.setFuel(spaceship.getFuel() + 20);
             String songFile = new File("src/resources/life.mp3").toURI().toString();
             Media media = new Media(songFile);
             MediaPlayer mp = new MediaPlayer(media);
@@ -347,7 +346,6 @@ public class GameModel {
             imageNumber = 1;
             immuneTime = time;
             imageSwitchTime = time;
-            spaceship.setFuel(spaceship.getFuel() + 20);
             String songFile = new File("src/resources/collision.mp3").toURI().toString();
             Media media = new Media(songFile);
             MediaPlayer mp = new MediaPlayer(media);
