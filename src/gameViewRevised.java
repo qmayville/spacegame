@@ -11,7 +11,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+
+import java.io.File;
 import java.util.ArrayList;
 
 /*
@@ -75,6 +79,11 @@ public class gameViewRevised extends Application{
 
         gameStage.setResizable(false); //could change so that it is resizable
         gameStage.show();
+        String songFile = new File("/Users/hannahbarnstone/Desktop/spacegame/src/resources/starwars (1).mp3").toURI().toString();
+        Media media = new Media(songFile);
+        MediaPlayer mp = new MediaPlayer(media);
+        mp.play();
+
 
     }
     /*
