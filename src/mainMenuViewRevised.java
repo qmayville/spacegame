@@ -222,8 +222,8 @@ public class mainMenuViewRevised extends Application {
                 "\n" +
                 "• By steering your ship through hearts dispersed throughout your journey you can gain extra lives. \n" +
                 "\n" +
-                "• Your rocket ship has a limit quantity of fuel that diminishes over time. You can gain extra fuel by " +
-                "steering your ship through fuel tanks disperse throughout your journey. \n" +
+                "• Your rocket ship has a limited quantity of fuel that diminishes over time. You can gain extra fuel by " +
+                "steering your ship through fuel tanks dispersed throughout your journey. \n" +
                 "\n" +
                 "• If you either run out of lives or fuel, you lose the game. The distance traveled prior to running out" +
                 " of fuel/lives is your score for the game.\n");
