@@ -386,6 +386,10 @@ public class GameModel {
      */
     private void gameOver(AnimationTimer gameTimer) {
         Image explosion = new Image("resources/explosion.png", 60, 80, true, true);
+        String songFile = new File("src/resources/gameover.mp3").toURI().toString();
+        Media media = new Media(songFile);
+        MediaPlayer mp = new MediaPlayer(media);
+        mp.play();
         spaceship.setImage(explosion);
         gameTimer.stop();
     }
