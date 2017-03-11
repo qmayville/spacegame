@@ -4,10 +4,14 @@ import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
 
 /**
  * Created by Michael Vue, Ethan Cassel-Mace, Hannah Barnstone, && Quinn Mayville
@@ -299,9 +303,18 @@ public class GameModel {
     private void giveBonus(String bonusType) {
         if (bonusType.equals("life")) {
             spaceship.changeLives(1);
+            spaceship.setFuel(spaceship.getFuel() + 20);
+            String songFile = new File("src/resources/life.mp3").toURI().toString();
+            Media media = new Media(songFile);
+            MediaPlayer mp = new MediaPlayer(media);
+            mp.play();
         }
         if (bonusType.equals("fuel")) {
             spaceship.setFuel(spaceship.getFuel() + 20);
+            String songFile = new File("src/resources/fuel.mp3").toURI().toString();
+            Media media = new Media(songFile);
+            MediaPlayer mp = new MediaPlayer(media);
+            mp.play();
         }
     }
 
@@ -334,6 +347,11 @@ public class GameModel {
             imageNumber = 1;
             immuneTime = time;
             imageSwitchTime = time;
+            spaceship.setFuel(spaceship.getFuel() + 20);
+            String songFile = new File("src/resources/collision.mp3").toURI().toString();
+            Media media = new Media(songFile);
+            MediaPlayer mp = new MediaPlayer(media);
+            mp.play();
         }
     }
 

@@ -79,13 +79,18 @@ public class gameViewRevised extends Application{
 
         gameStage.setResizable(false); //could change so that it is resizable
         gameStage.show();
+
         String songFile = new File("src/resources/starwars (1).mp3").toURI().toString();
+        playMusic(songFile);
+    }
+
+    private void playMusic(String songFile){
         Media media = new Media(songFile);
         MediaPlayer mp = new MediaPlayer(media);
         mp.play();
-
-
     }
+
+
     /*
      * Constructs the images to be used in the background.
      */
@@ -97,10 +102,10 @@ public class gameViewRevised extends Application{
         graphics.setFill(Color.YELLOW);
         graphics.setFont(Font.font("Calibri", FontWeight.NORMAL, 20));
     }
-
     /*
      * Preprocess the game window gui and constructs key handlers for left and right movement
      */
+
     private void setup() {
         gameStage.setTitle("Space Adventurer");
         Group root = new Group();
