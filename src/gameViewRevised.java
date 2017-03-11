@@ -79,7 +79,7 @@ public class gameViewRevised extends Application{
 
         gameStage.setResizable(false); //could change so that it is resizable
         gameStage.show();
-        String songFile = new File("/Users/hannahbarnstone/Desktop/spacegame/src/resources/starwars (1).mp3").toURI().toString();
+        String songFile = new File("src/resources/starwars (1).mp3").toURI().toString();
         Media media = new Media(songFile);
         MediaPlayer mp = new MediaPlayer(media);
         mp.play();
