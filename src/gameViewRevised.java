@@ -35,7 +35,7 @@ public class gameViewRevised extends Application{
     GraphicsContext graphics;
 
     private int canvasWidth = 550;
-    private int canvasHeight = 2000;
+    private int canvasHeight = 700;
 
     //Placeholders for actual game implementation where background is moving
     private int backgroundWidth = canvasWidth;
@@ -48,13 +48,10 @@ public class gameViewRevised extends Application{
     double earthMovement = .7;
     double spaceMovement = .1;
 
-    //Items here are public for now because we may need to modify them later
-    public Image background;
-    public Image space;
-    //public Image ship;
-    public Image fuel;
-    //public Image asteroid;
-    public Image fuelGauge;
+    //Images used in background
+    private Image background;
+    private Image space;
+    private Image fuelGauge;
 
     public String score;
 
@@ -90,7 +87,7 @@ public class gameViewRevised extends Application{
         background = new Image("resources/GameBackGround.png", backgroundWidth, backgroundHeight, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
         space = new Image("resources/starryPlanetBackGround.png", backgroundWidth, backgroundHeight, true, true);
-        //       Sets fill color and font/font size for score
+        //Sets fill color and font/font size for score
         graphics.setFill(Color.YELLOW);
         graphics.setFont(Font.font("Calibri", FontWeight.NORMAL, 20));
     }
@@ -133,10 +130,13 @@ public class gameViewRevised extends Application{
     }
 
 
-    //Order matters
+    /*
+     * Updates the view to match the model's current state
+     */
     public void update(){
+        //Order matters
         graphics.clearRect(0, 0, canvasWidth, canvasHeight);
-        drawBackgroundImages(background, fuel, fuelGauge);
+        drawBackgroundImages(background, fuelGauge);
         drawAsteroids();
         drawSpaceship();
         drawFuelIndicator();
@@ -145,6 +145,9 @@ public class gameViewRevised extends Application{
         drawLifeIndicators();
     }
 
+    /*
+     * Draws the bonuses on the canvas based on the model's state
+     */
     private void drawBonus() {
         ArrayList<BonusSprite> bonusList = model.getBonusList();
         for (BonusSprite bonus : bonusList) {
@@ -155,6 +158,9 @@ public class gameViewRevised extends Application{
         }
     }
 
+    /*
+     * Draws the fuel indicator on the canvas based on the model's state
+     */
     private void drawFuelIndicator() {
         FuelIndicatorSprite fuelIndicator = model.getFuelIndicator();
         Image fuelIndicatorImage = fuelIndicator.getImage();
@@ -163,6 +169,9 @@ public class gameViewRevised extends Application{
         graphics.drawImage( fuelIndicatorImage, fuelIndicatorPositionX, fuelIndicatorPositionY);
     }
 
+    /*
+     * Draws the life indicators on the canvas based on the model's state
+     */
     private void drawLifeIndicators() {
         ArrayList<LifeIndicatorSprite> indicators = model.getLifeIndicatorList();
         for (LifeIndicatorSprite indicator : indicators) {
@@ -174,6 +183,9 @@ public class gameViewRevised extends Application{
     }
 
 
+    /*
+     * Draws the spaceship on the canvas based on the model's state
+     */
     public void drawSpaceship() {
         ShipSprite spaceship = model.getSpaceship();
         Image spaceshipImage = spaceship.getImage();
@@ -183,7 +195,7 @@ public class gameViewRevised extends Application{
     }
 
     /*
-     * updates asteroid images and positions
+     * Draws the asteroids on the canvas based on the model's state
      */
     public void drawAsteroids() {
         ArrayList<AsteroidSprite> obstacleList = model.getObstacleList();
@@ -194,26 +206,13 @@ public class gameViewRevised extends Application{
             graphics.drawImage(obstacleImage, obstaclePositionX, obstaclePositionY);
         }
     }
-    /*
-     * updates life indicators.
-     */
-    public void drawIndicators() {
-//        ArrayList<AsteroidSprite> obstacleList = model.getObstacleList();
-//        ArrayList<AsteroidSprite> obstacleList2 = model.getObstacleList2();
-//        for (AsteroidSprite obstacle : obstacleList) {
-//            Image obstacleImage = obstacle.getImage();
-//            double obstaclePositionX = obstacle.getPositionX();
-//            double obstaclePositionY = obstacle.getPositionY();
-//            graphics.drawImage( obstacleImage, obstaclePositionX, obstaclePositionY);
-//        }
-    }
 
 
 
     /*
-     * Draws the background images. Temporary method, will be implemented in controller once background is changing.
+     * Draws the background images.
      */
-    private void drawBackgroundImages(Image background, Image fuel, Image fuelGauge) {
+    private void drawBackgroundImages(Image background, Image fuelGauge) {
 
         if (backgroundYCoord < -5100){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
@@ -233,7 +232,7 @@ public class gameViewRevised extends Application{
         else {
             graphics.drawImage(space, backgroundXCoord, spaceBound);
         }
-//        the x and y placement of these units are only temporary
+
         graphics.drawImage(fuelGauge,530, 400);
     }
 

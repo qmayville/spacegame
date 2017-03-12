@@ -23,9 +23,6 @@ public class GameModel {
     private ArrayList<AsteroidSprite> obstacleList;
     private ArrayList<BonusSprite> bonusList;
     private ArrayList<LifeIndicatorSprite> lifeIndicatorList;
-    // TODO Needs fuel gaugue/indicator
-    // TODO needs life indicators and score tracker
-    private double height;
     private double time;
     private int score;
     private double immuneTime;
@@ -44,15 +41,13 @@ public class GameModel {
     private Image lifeImage;
     private Image lifeUsedImage;
     private int imageNumber;
-    int asteroidScore = 1000;
-    int numAsteroids = 1;
-    int oldPositionX = 0;
+    private int asteroidScore = 1000;
+    private int numAsteroids = 1;
 
 
 
 
     public GameModel(){
-        this.height = 0;
         this.time = 0;
         this.score = 0;
         this.immuneTime = -5;
@@ -186,11 +181,18 @@ public class GameModel {
                         bonus.updatePositionY(elapsedTime);
                     }
 
-                    //Check for collisions
+                    //Check for collisions with obstacles and remove obstacles below screen
                     checkObstacleCollisions(this);
 
-                    //Check if bonuses are below screen
+                    //Check for collisions with bonuses and remove bonuses below screen
                     checkBonusCollisions();
+
+                    //Increase number of asteroids generated
+                    if (score > asteroidScore && numAsteroids < 4){
+                        numAsteroids += 1;
+                        asteroidScore += 3000;
+                    }
+
 
                     //Generate asteroids every 2 time-units
                     if (lastObstacleGenerationTime + 2 < time) {
@@ -198,7 +200,7 @@ public class GameModel {
                         lastObstacleGenerationTime = time;
                     }
 
-                    //Generate fuel every 10.4 time-units
+                    //Generate fuel every 7.4 time-units
                     if (lastFuelGenerationTime + 7.4 < time) {
                         generateFuel();
                         lastFuelGenerationTime = time;
@@ -209,15 +211,10 @@ public class GameModel {
                         generateBonus();
                         lastBonusGenerationTime = time;
                     }
-                    if (score > asteroidScore){
-                        numAsteroids += 1;
-                        generateObstacles();
-                        asteroidScore += 3000;
-                    }
+
+
+                    //increment score and update view
                     score = score + 1;
-
-
-                    //TODO fuel, scorekeeping, bonuses
                     view.update();
                 }
                 lastUpdateTime.set(currentTime);
@@ -227,6 +224,9 @@ public class GameModel {
 
     }
 
+    /*
+     * Flickers between two given images at a given rate.
+     */
     private void flickerImage(Image image1, Image image2, double flickerTime) {
         if (imageSwitchTime + flickerTime < time) {
             if (imageNumber == 1) {
@@ -241,11 +241,14 @@ public class GameModel {
     }
 
 
+    /*
+     * Generates bonuses.
+     */
     private void generateBonus() {
+        //TODO make more bonuses
         //Temporary implementation only generates life bonuses. Was thinking we could randomize which bonus it generates
         int positionX = randomNumberGenerator.nextInt(460);
-        Image bonusImage = new Image("resources/heart.png", 30, 50, true, true);
-        BonusSprite bonus = new BonusSprite(positionX, -100, 120, bonusImage, 700, "life");
+        BonusSprite bonus = new BonusSprite(positionX, -100, 120, lifeImage, 700, "life");
         if (noIntersect(bonus)) {
             bonusList.add(bonus);
         } else {
@@ -406,16 +409,14 @@ public class GameModel {
      */
     private void generateObstacles() {
         int xIncrement = 460/numAsteroids;
-        int lowerBound = 0;
         int positionY = -100;
         int counter = 0;
 
         for (int i =0; i< numAsteroids; i++) {
             int newPositionX = (randomNumberGenerator.nextInt(xIncrement)+ (counter*xIncrement));
-            positionY = (positionY - (150*counter));
+            positionY = (positionY - 150);
             AsteroidSprite asteroid = new AsteroidSprite(newPositionX , positionY, (120), asteroidImage, 700);
             obstacleList.add(asteroid);
-            oldPositionX = newPositionX;
             counter++;
         }
 
