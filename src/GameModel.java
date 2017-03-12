@@ -44,6 +44,10 @@ public class GameModel {
     private Image lifeImage;
     private Image lifeUsedImage;
     private int imageNumber;
+    int asteroidScore = 1000;
+    int numAsteroids = 1;
+    int oldPositionX = 0;
+    
 
 
 
@@ -205,7 +209,11 @@ public class GameModel {
                         generateBonus();
                         lastBonusGenerationTime = time;
                     }
-
+                    if (score > asteroidScore){
+                        numAsteroids += 1;
+                        generateObstacles();
+                        asteroidScore += 3000;
+                    }
                     score = score + 1;
 
 
@@ -397,15 +405,29 @@ public class GameModel {
      * Generates obstacle sprites that are added to obstacleList
      */
     private void generateObstacles() {
-        //TODO: check asteroids doint' intersect bonuses
-        //Temporary basic implementation generates one asteroid at a time
-        int positionX = randomNumberGenerator.nextInt(229);
-        int positionX2 = (randomNumberGenerator.nextInt(230) + 230);
-        //TODO make velocity faster as time goes by, make sure velocity is same as backgrounds
-        AsteroidSprite asteroid1 = new AsteroidSprite(positionX, -200, 120, asteroidImage, 700);
-        obstacleList.add(asteroid1);
-        AsteroidSprite asteroid2 = new AsteroidSprite(positionX2, -50, 120, asteroidImage, 700);
-        obstacleList.add(asteroid2);
+        int xIncrement = 460/numAsteroids;
+        int lowerBound = 0;
+        int positionY = -100;
+        int counter = 0;
+
+        for (int i =0; i< numAsteroids; i++) {
+            int newPositionX = (randomNumberGenerator.nextInt(xIncrement)+ (counter*xIncrement));
+            AsteroidSprite asteroid = new AsteroidSprite(newPositionX , positionY*counter, (120), asteroidImage, 700);
+            obstacleList.add(asteroid);
+            //positionY = positionY - 1000;
+            oldPositionX = newPositionX;
+            counter++;
+        }
+
+//        //TODO: check asteroids doint' intersect bonuses
+//        //Temporary basic implementation generates one asteroid at a time
+//        int positionX = randomNumberGenerator.nextInt(229);
+//        int positionX2 = (randomNumberGenerator.nextInt(230) + 230);
+//        //TODO make velocity faster as time goes by, make sure velocity is same as backgrounds
+//        AsteroidSprite asteroid1 = new AsteroidSprite(positionX, -200, 120, asteroidImage, 700);
+//        obstacleList.add(asteroid1);
+//        AsteroidSprite asteroid2 = new AsteroidSprite(positionX2, -50, 120, asteroidImage, 700);
+//        obstacleList.add(asteroid2);
     }
 
 
