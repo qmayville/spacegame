@@ -16,7 +16,7 @@ public class gameController {
         }
         model.initialize();
         model.setView(view);
-        model.runTimer();
+        model.startGame();
     }
 
 
@@ -31,5 +31,7 @@ public class gameController {
     public void rightArrowKeyReleased() { model.stopAccelerationPositive(); }
 
     public void leftArrowKeyReleased() { model.stopAccelerationNegative(); }
+
+    public void pKey() {model.pause();}
 
 }

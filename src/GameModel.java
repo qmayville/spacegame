@@ -20,57 +20,43 @@ public class GameModel {
 
     private ShipSprite spaceship;
     private FuelIndicatorSprite fuelIndicator;
-    private ArrayList<AsteroidSprite> obstacleList;
-    private ArrayList<BonusSprite> bonusList;
-    private ArrayList<LifeIndicatorSprite> lifeIndicatorList;
-    private double time;
-    private int score;
-    private double immuneTime;
-    private double lastObstacleGenerationTime;
-    private double lastFuelGenerationTime;
-    private double lastBonusGenerationTime;
-    private double imageSwitchTime;
+    private ArrayList<AsteroidSprite> obstacleList = new ArrayList<>();
+    private ArrayList<BonusSprite> bonusList = new ArrayList<>();
+    private ArrayList<LifeIndicatorSprite> lifeIndicatorList = new ArrayList<>();
+    private double time = 0;
+    private int score = 0;
+    private double immuneTime = -5;
+    private double imageSwitchTime = -5;
+    //These can be changed to manipulate when the first generation of each occurs
+    //The lower the number, the earlier it happens
+    private double lastObstacleGenerationTime = -5;
+    private double lastFuelGenerationTime = -1;
+    private double lastBonusGenerationTime = -1;
     private gameViewRevised view;
     private Random randomNumberGenerator = new Random();
-    private boolean acceleratingPositive;
-    private boolean acceleratingNegative;
+    private boolean acceleratingPositive = false;
+    private boolean acceleratingNegative = false;
     private Image shipImage1;
     private Image shipImage2;
     private Image immuneImage;
     private Image asteroidImage;
     private Image lifeImage;
     private Image lifeUsedImage;
-    private int imageNumber;
+    private int imageNumber = 1;
     private int asteroidScore = 1000;
     private int numAsteroids = 1;
+    private boolean paused = false;
+    private AnimationTimer gameTimer;
+    private LongProperty lastUpdateTime = new SimpleLongProperty();
 
 
 
 
     public GameModel(){
-        this.time = 0;
-        this.score = 0;
-        this.immuneTime = -5;
-        this.imageSwitchTime = -5;
-        //These can be changed to manipulate when the first generation of each occurs
-        //The lower the number, the earlier it happens
-        this.lastObstacleGenerationTime = -5;
-        this.lastFuelGenerationTime = -1;
-        this.lastBonusGenerationTime = 1;
-
-        acceleratingNegative = false;
-        acceleratingPositive = false;
-
-        obstacleList = new ArrayList<>();
-        bonusList = new ArrayList<>();
-        lifeIndicatorList = new ArrayList<>();
-
         shipImage1 = new Image("resources/toonship_1.png", 60, 80, true, true);
         shipImage2 = new Image("resources/toonship_2.png", 60, 80, true, true);
         immuneImage =new WritableImage(60,80);
         asteroidImage = new Image("resources/asteroid.gif", 70, 70, true, true);
-        imageNumber = 1;
-
         lifeImage = new Image("resources/heart.png", 30, 30, true, true);
         lifeUsedImage = new Image("resources/heartUsed.png", 30, 30, true, true);
 
@@ -78,8 +64,8 @@ public class GameModel {
             double positionX = 300 + i*50;
             LifeIndicatorSprite indicator = new LifeIndicatorSprite(positionX, 10, lifeImage, lifeUsedImage);
             lifeIndicatorList.add(indicator);
-
         }
+        constructTimer();
     }
 
     public double getScore(){return score;}
@@ -124,11 +110,10 @@ public class GameModel {
     }
 
     /*
-     * Runs the timer that manages the game
+     * Constructs the timer that manages the game
      */
-    public void runTimer() {
-        LongProperty lastUpdateTime = new SimpleLongProperty();
-        AnimationTimer gameTimer = new AnimationTimer() {
+    public void constructTimer() {
+        gameTimer = new AnimationTimer() {
             @Override
             public void handle(long currentTime) {
                 if (lastUpdateTime.get() > 0) {
@@ -168,7 +153,7 @@ public class GameModel {
                     fuelIndicator.updatePositionY(elapsedTime);
 
                     updateFuel();
-                    checkFuel(this);
+                    checkFuel();
 
                     //Move existing obstacles
                     for (AsteroidSprite obstacle : obstacleList) {
@@ -182,7 +167,7 @@ public class GameModel {
                     }
 
                     //Check for collisions with obstacles and remove obstacles below screen
-                    checkObstacleCollisions(this);
+                    checkObstacleCollisions();
 
                     //Check for collisions with bonuses and remove bonuses below screen
                     checkBonusCollisions();
@@ -220,8 +205,13 @@ public class GameModel {
                 lastUpdateTime.set(currentTime);
             }
         };
-        gameTimer.start();
+    }
 
+    /*
+     * Starts the game timer.
+     */
+    public void startGame() {
+        gameTimer.start();
     }
 
     /*
@@ -331,7 +321,7 @@ public class GameModel {
     /*
      * Remove obstacles that are off screen and check for collisions
      */
-    private void checkObstacleCollisions(AnimationTimer gameTimer) {
+    private void checkObstacleCollisions() {
         Iterator<AsteroidSprite> obstacleIterator = obstacleList.iterator();
         while (obstacleIterator.hasNext()) {
             AsteroidSprite obstacle = obstacleIterator.next();
@@ -376,7 +366,7 @@ public class GameModel {
     /*
      * Checks whether the fuel is empty
      */
-    private void checkFuel(AnimationTimer gameTimer) {
+    private void checkFuel() {
         if (spaceship.getFuel() <= 0) {
             gameOver(gameTimer);
         }
@@ -401,6 +391,20 @@ public class GameModel {
         mp.play();
         spaceship.setImage(explosion);
         gameTimer.stop();
+    }
+
+    /*
+     * Pauses and unpauses the animation timer.
+     */
+    public void pause() {
+        if (paused) {
+            lastUpdateTime = new SimpleLongProperty();
+            gameTimer.start();
+            paused = false;
+        } else {
+            gameTimer.stop();
+            paused = true;
+        }
     }
 
     //TODO implement this method

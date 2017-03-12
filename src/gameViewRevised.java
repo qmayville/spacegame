@@ -113,9 +113,15 @@ public class gameViewRevised extends Application{
                     controller.rightArrowKey();
                 } else if (event.getCode() == KeyCode.LEFT) {
                     controller.leftArrowKey();
+                } else if (event.getCode() == KeyCode.P) {
+                    controller.pKey();
                 }
             }
         });
+
+
+
+
 
         gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
