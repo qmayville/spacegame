@@ -35,7 +35,7 @@ public class gameViewRevised extends Application{
     GraphicsContext graphics;
 
     private int canvasWidth = 550;
-    private int canvasHeight = 700;
+    private int canvasHeight = 2000;
 
     //Placeholders for actual game implementation where background is moving
     private int backgroundWidth = canvasWidth;

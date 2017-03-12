@@ -47,7 +47,7 @@ public class GameModel {
     int asteroidScore = 1000;
     int numAsteroids = 1;
     int oldPositionX = 0;
-    
+
 
 
 
@@ -412,9 +412,9 @@ public class GameModel {
 
         for (int i =0; i< numAsteroids; i++) {
             int newPositionX = (randomNumberGenerator.nextInt(xIncrement)+ (counter*xIncrement));
-            AsteroidSprite asteroid = new AsteroidSprite(newPositionX , positionY*counter, (120), asteroidImage, 700);
+            positionY = (positionY - (150*counter));
+            AsteroidSprite asteroid = new AsteroidSprite(newPositionX , positionY, (120), asteroidImage, 700);
             obstacleList.add(asteroid);
-            //positionY = positionY - 1000;
             oldPositionX = newPositionX;
             counter++;
         }
