@@ -1,10 +1,12 @@
 import javafx.scene.image.Image;
 
 /**
+ * Sprite class for bonus objects
+ *
  * Created by mayvilleq on 3/9/17.
  */
 
-public class BonusSprite extends AsteroidSprite {
+public class BonusSprite extends SpaceObjectSprite {
     private String bonusType;
 
 

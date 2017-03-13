@@ -28,6 +28,9 @@ public class mainMenuViewRevised extends Application {
     private static final double SCENE_WIDTH = 550;
     private static final double SCENE_HEIGHT = 700;
     private Stage mainStage;
+    private boolean sound = true;
+    //this might not be the best way to display sound
+    private Text soundText = new Text("Sound Currently: ON");
 
     //scene variables
     private Scene menuScene;
@@ -123,7 +126,7 @@ public class mainMenuViewRevised extends Application {
             public void handle(ActionEvent e) {
 
                 try {
-                    new gameController(new GameModel());
+                    new gameController(new GameModel(sound));
                     mainStage.close();
 
                 } catch (Exception error) {
@@ -361,11 +364,38 @@ public class mainMenuViewRevised extends Application {
         VBox homeButtons = new VBox();
         homeButtons.setAlignment(Pos.CENTER);
 
+
         // Create new buttons
-        Button toggleSound1 = new Button("On");
-        Button toggleSound2 = new Button("Off");
-        toggleSound1.setMaxWidth(200);
-        toggleSound2.setMaxWidth(200);
+        Button soundOn = new Button("On");
+        Button soundOff = new Button("Off");
+        soundOn.setMaxWidth(200);
+        soundOff.setMaxWidth(200);
+
+        soundOn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                if (!sound) {
+                    sound = true;
+                    soundText.setText("Sound Currently: ON");
+                }
+            }
+
+        });
+
+        soundOff.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                if (sound) {
+                    sound = false;
+                    soundText.setText("Sound Currently: OFF");
+                }
+            }
+
+        });
+
+        soundText.setFont(Font.font("Herculanum", FontWeight.NORMAL, 20));
+        soundText.setFill(Color.BEIGE);
+
 
         Button back = new Button("Back");
         back.setMaxWidth(MAX_BUTTON_WIDTH);
@@ -381,9 +411,8 @@ public class mainMenuViewRevised extends Application {
 
         homeButtons.setSpacing(30);
         homeButtons.setPadding(new Insets(0, 0, 400, 0));
-        homeButtons.getChildren().addAll(toggleSound1, toggleSound2, back);
+        homeButtons.getChildren().addAll(soundText, soundOn, soundOff, back);
 
         return homeButtons;
     }
-
 }

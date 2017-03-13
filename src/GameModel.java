@@ -48,11 +48,15 @@ public class GameModel {
     private boolean paused = false;
     private AnimationTimer gameTimer;
     private LongProperty lastUpdateTime = new SimpleLongProperty();
+    private boolean sound;
+    private int velocityY = 120;
+    private int velocityScore = 2000;
 
 
 
 
-    public GameModel(){
+    public GameModel(boolean sound){
+        this.sound = sound;
         shipImage1 = new Image("resources/toonship_1.png", 60, 80, true, true);
         shipImage2 = new Image("resources/toonship_2.png", 60, 80, true, true);
         immuneImage =new WritableImage(60,80);
@@ -173,9 +177,15 @@ public class GameModel {
                     checkBonusCollisions();
 
                     //Increase number of asteroids generated
-                    if (score > asteroidScore && numAsteroids < 4){
+                    if (score > asteroidScore && numAsteroids < 6){
                         numAsteroids += 1;
                         asteroidScore += 3000;
+                    }
+
+                    //Increase velocity
+                    if (score > velocityScore) {
+                        velocityY += 2;
+                        velocityScore += 250;
                     }
 
 
@@ -238,7 +248,7 @@ public class GameModel {
         //TODO make more bonuses
         //Temporary implementation only generates life bonuses. Was thinking we could randomize which bonus it generates
         int positionX = randomNumberGenerator.nextInt(460);
-        BonusSprite bonus = new BonusSprite(positionX, -100, 120, lifeImage, 700, "life");
+        BonusSprite bonus = new BonusSprite(positionX, -100, velocityY, lifeImage, 700, "life");
         if (noIntersect(bonus)) {
             bonusList.add(bonus);
         } else {
@@ -253,7 +263,7 @@ public class GameModel {
     private void generateFuel(){
         int positionX = randomNumberGenerator.nextInt(460);
         Image fuelImage = new Image("resources/fuel.png", 30, 50, true, true);
-        BonusSprite fuelBonus = new BonusSprite(positionX, -100, 120, fuelImage, 700, "fuel");
+        BonusSprite fuelBonus = new BonusSprite(positionX, -100, velocityY, fuelImage, 700, "fuel");
         if (noIntersect(fuelBonus)) {
             bonusList.add(fuelBonus);
         } else {
@@ -304,17 +314,21 @@ public class GameModel {
     private void giveBonus(String bonusType) {
         if (bonusType.equals("life")) {
             spaceship.changeLives(1);
-            String songFile = new File("src/resources/life.mp3").toURI().toString();
-            Media media = new Media(songFile);
-            MediaPlayer mp = new MediaPlayer(media);
-            mp.play();
+            if (sound) {
+                String songFile = new File("src/resources/life.mp3").toURI().toString();
+                Media media = new Media(songFile);
+                MediaPlayer mp = new MediaPlayer(media);
+                mp.play();
+            }
         }
         if (bonusType.equals("fuel")) {
             spaceship.setFuel(spaceship.getFuel() + 20);
-            String songFile = new File("src/resources/fuel.mp3").toURI().toString();
-            Media media = new Media(songFile);
-            MediaPlayer mp = new MediaPlayer(media);
-            mp.play();
+            if (sound) {
+                String songFile = new File("src/resources/fuel.mp3").toURI().toString();
+                Media media = new Media(songFile);
+                MediaPlayer mp = new MediaPlayer(media);
+                mp.play();
+            }
         }
     }
 
@@ -347,10 +361,12 @@ public class GameModel {
             imageNumber = 1;
             immuneTime = time;
             imageSwitchTime = time;
-            String songFile = new File("src/resources/collision.mp3").toURI().toString();
-            Media media = new Media(songFile);
-            MediaPlayer mp = new MediaPlayer(media);
-            mp.play();
+            if (sound) {
+                String songFile = new File("src/resources/collision.mp3").toURI().toString();
+                Media media = new Media(songFile);
+                MediaPlayer mp = new MediaPlayer(media);
+                mp.play();
+            }
         }
     }
 
@@ -385,10 +401,12 @@ public class GameModel {
      */
     private void gameOver(AnimationTimer gameTimer) {
         Image explosion = new Image("resources/explosion.png", 60, 80, true, true);
-        String songFile = new File("src/resources/gameover.mp3").toURI().toString();
-        Media media = new Media(songFile);
-        MediaPlayer mp = new MediaPlayer(media);
-        mp.play();
+        if (sound) {
+            String songFile = new File("src/resources/gameover.mp3").toURI().toString();
+            Media media = new Media(songFile);
+            MediaPlayer mp = new MediaPlayer(media);
+            mp.play();
+        }
         spaceship.setImage(explosion);
         gameTimer.stop();
     }
@@ -419,7 +437,7 @@ public class GameModel {
         for (int i =0; i< numAsteroids; i++) {
             int newPositionX = (randomNumberGenerator.nextInt(xIncrement)+ (counter*xIncrement));
             positionY = (positionY - 150);
-            AsteroidSprite asteroid = new AsteroidSprite(newPositionX , positionY, (120), asteroidImage, 700);
+            AsteroidSprite asteroid = new AsteroidSprite(newPositionX , positionY, velocityY, asteroidImage, 700);
             obstacleList.add(asteroid);
             counter++;
         }

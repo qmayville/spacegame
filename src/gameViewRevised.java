@@ -43,10 +43,10 @@ public class gameViewRevised extends Application{
     private int backgroundHeight = 0;
     private int backgroundXCoord = 0;
     //    -2290
-    public double backgroundYCoord = -5280;
-    double spaceBound = -800;
-    double earthMovement = .7;
-    double spaceMovement = .1;
+    private double backgroundYCoord = -5280;
+    private double spaceBound = -800;
+    private double earthMovement = .7;
+    private double spaceMovement = .1;
 
     //Images used in background
     private Image background;
@@ -69,7 +69,7 @@ public class gameViewRevised extends Application{
     public void start(Stage primaryStage) throws Exception {
 
         //Used to make the primaryStage publicly available to mainMenuViewRevised so that it can be called.
-        gameViewOld.gameStage = primaryStage;
+        gameViewRevised.gameStage = primaryStage;
 
         //Creates window and canvas for drawing images
         setup();
