@@ -87,7 +87,7 @@ public class gameView extends Application{
      * Constructs the images to be used in the background.
      */
     private void createImages() {
-        background = new Image("resources/GameBackGround.png", backgroundWidth, backgroundHeight, true, true);
+        background = new Image("resources/gameBackground.png", backgroundWidth, backgroundHeight, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
         space = new Image("resources/starryPlanetBackGround.png", backgroundWidth, backgroundHeight, true, true);
         //Sets fill color and font/font size for score
