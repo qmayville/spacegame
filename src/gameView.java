@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * The window for the actual gameplay. Updates via access to the model and
  * has a scrolling background.
  */
-public class gameViewRevised extends Application{
+public class gameView extends Application{
 
     static Stage gameStage = new Stage();
     private Scene gameScene;
@@ -56,7 +56,7 @@ public class gameViewRevised extends Application{
     private String score;
 
 
-    public gameViewRevised(gameController controller, GameModel model) {
+    public gameView(gameController controller, GameModel model) {
         super();
         this.model = model;
         this.controller = controller;
@@ -68,8 +68,8 @@ public class gameViewRevised extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        //Used to make the primaryStage publicly available to mainMenuViewRevised so that it can be called.
-        gameViewRevised.gameStage = primaryStage;
+        //Used to make the primaryStage publicly available to mainMenuView so that it can be called.
+        gameView.gameStage = primaryStage;
 
         //Creates window and canvas for drawing images
         setup();
@@ -303,7 +303,7 @@ public class gameViewRevised extends Application{
      * Sets the current stage to the main menu
      */
     private void mainMenu(boolean sound) {
-        mainMenuViewRevised menu = new mainMenuViewRevised();
+        mainMenuView menu = new mainMenuView();
         menu.start(menu.mainStage);
         menu.setSound(sound);
         gameStage.close();

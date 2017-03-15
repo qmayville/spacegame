@@ -38,7 +38,7 @@ public class GameModel {
     private double lastObstacleGenerationTime = -5;
     private double lastFuelGenerationTime = -1;
     private double lastBonusGenerationTime = -1;
-    private gameViewRevised view;
+    private gameView view;
     private Random randomNumberGenerator = new Random();
     private boolean acceleratingPositive = false;
     private boolean acceleratingNegative = false;
@@ -107,7 +107,7 @@ public class GameModel {
 
     }
 
-    public void setView(gameViewRevised view) {
+    public void setView(gameView view) {
         this.view = view;
     }
 

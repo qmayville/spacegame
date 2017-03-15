@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  *
  * The window for the main menu.
  */
-public class mainMenuViewRevised extends Application {
+public class mainMenuView extends Application {
     public static final double MAX_BUTTON_WIDTH = 180;
     private static final double SCENE_WIDTH = 550;
     private static final double SCENE_HEIGHT = 700;

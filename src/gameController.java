@@ -5,13 +5,13 @@
  */
 public class gameController {
     private GameModel model;
-    private gameViewRevised view;
+    private gameView view;
 
     public gameController(GameModel model) {
         this.model = model;
-        view = new gameViewRevised(this, model);
+        view = new gameView(this, model);
         try {
-            view.start(gameViewRevised.gameStage);
+            view.start(gameView.gameStage);
 
         } catch (Exception error) {
             error.printStackTrace();
