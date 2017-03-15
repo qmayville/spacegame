@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 /**
  * Controller initializes view and model and links user input from the view to the model.
  *

@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 
 
@@ -38,16 +39,21 @@ public class GameModel {
     private double lastObstacleGenerationTime = -5;
     private double lastFuelGenerationTime = -1;
     private double lastBonusGenerationTime = -1;
+
     private gameView view;
     private Random randomNumberGenerator = new Random();
     private boolean acceleratingPositive = false;
     private boolean acceleratingNegative = false;
+
+    //Images used for sprites
     private Image shipImage1;
     private Image shipImage2;
     private Image immuneImage;
     private Image asteroidImage;
     private Image lifeImage;
     private Image lifeUsedImage;
+
+
     private int imageNumber = 1;
     private int asteroidScore = 1000;
     private int numAsteroids = 1;
@@ -58,10 +64,12 @@ public class GameModel {
     private int velocityY = 120;
     private int velocityScore = 2000;
 
+    private LinkedList<Integer> highScoreList;
 
 
 
-    public GameModel(boolean sound){
+
+    public GameModel(boolean sound, LinkedList<Integer> highScoreList){
         this.sound = sound;
         shipImage1 = new Image("resources/toonship_1.png", 60, 80, true, true);
         shipImage2 = new Image("resources/toonship_2.png", 60, 80, true, true);
@@ -75,6 +83,9 @@ public class GameModel {
             LifeIndicatorSprite indicator = new LifeIndicatorSprite(positionX, 10, lifeImage, lifeUsedImage);
             lifeIndicatorList.add(indicator);
         }
+
+        this.highScoreList = highScoreList;
+
         constructTimer();
     }
 
@@ -423,12 +434,26 @@ public class GameModel {
         }
         spaceship.setImage(explosion);
         gameTimer.stop();
+        checkScore();
 
         //Brief pause before transition to new scene
         Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(2500),
-                ae -> view.gameOver(sound)));
+                ae -> view.gameOver(sound, highScoreList)));
         timeline.play();
+    }
+
+    /*
+     * Checks to see whether score is a new high score.
+     */
+    private void checkScore() {
+        for (int i = 0; i < 3; i++) {
+            if ((score + 1) > highScoreList.get(i)) {
+                highScoreList.add(i, (score + 1));
+                highScoreList.remove(3);
+                return;
+            }
+        }
     }
 
     /*
@@ -466,6 +491,7 @@ public class GameModel {
         return sound;
     }
 
+    public LinkedList<Integer> getHighScoreList() { return  highScoreList;}
 
 
     public void startAccelerationPositive(){
@@ -499,6 +525,5 @@ public class GameModel {
     public void stopShipMovement() {
         spaceship.setVelocityX(0);
     }
-
 
 }

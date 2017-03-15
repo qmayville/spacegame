@@ -18,6 +18,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
+
 /*
  * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
  *
@@ -29,8 +31,9 @@ public class mainMenuView extends Application {
     private static final double SCENE_HEIGHT = 700;
     static Stage mainStage;
     private boolean sound = true;
-    //this might not be the best way to display sound
     private Text soundText = new Text("Sound Currently: ON");
+    private Text highScoreText = new Text();
+    private LinkedList<Integer> highScoreList = new LinkedList<Integer>();
 
     //scene variables
     private Scene menuScene;
@@ -47,6 +50,11 @@ public class mainMenuView extends Application {
 
         mainStage = primaryStage;
 
+        //Initializes the high score list
+        for (int i= 0; i < 3; i++) {
+            highScoreList.add(0);
+        }
+
         // Sets scene variables to the scene returned by their respective builder methods
         menuScene = buildMenuScene(mainStage);
         instructionsScene = buildInstructionsScene(mainStage);
@@ -58,6 +66,7 @@ public class mainMenuView extends Application {
         primaryStage.setScene(menuScene);
         primaryStage.setResizable(false); //could change so that it is resizable
         primaryStage.show();
+
 
     }
 
@@ -126,7 +135,7 @@ public class mainMenuView extends Application {
             public void handle(ActionEvent e) {
 
                 try {
-                    new gameController(new GameModel(sound));
+                    new gameController(new GameModel(sound, highScoreList));
                     mainStage.close();
 
                 } catch (Exception error) {
@@ -296,22 +305,21 @@ public class mainMenuView extends Application {
         blackTransparency.setFill(Color.web("black", 0.75));
 
 
-        Text highScore = new Text();
-        highScore.setCache(true);
-        highScore.setX(50);
-        highScore.setY(50);
-        highScore.setFill(Color.ORANGERED);
-        highScore.setFont(Font.font("copperplate", FontWeight.EXTRA_BOLD, 25));
-        highScore.setWrappingWidth(500);
-        highScore.setTextAlignment(TextAlignment.JUSTIFY);
-        highScore.setText("\n• High Score: 1,123,123,123\n" +
+        highScoreText.setCache(true);
+        highScoreText.setX(50);
+        highScoreText.setY(50);
+        highScoreText.setFill(Color.ORANGERED);
+        highScoreText.setFont(Font.font("copperplate", FontWeight.EXTRA_BOLD, 25));
+        highScoreText.setWrappingWidth(500);
+        highScoreText.setTextAlignment(TextAlignment.JUSTIFY);
+        highScoreText.setText("\n• High Score: " + highScoreList.get(0) + "\n" +
                 "\n" +
-                "• High Score 2: 34,234\n" +
+                "• High Score 2: " + highScoreList.get(1) + "\n" +
                 "\n" +
-                "• High Score 3: 12\n");
+                "• High Score 3: " + highScoreList.get(2) + "\n");
 
         textTransparency.getChildren().add(blackTransparency);
-        textTransparency.getChildren().add(highScore);
+        textTransparency.getChildren().add(highScoreText);
 
 
 
@@ -416,10 +424,31 @@ public class mainMenuView extends Application {
         return homeButtons;
     }
 
+    /*
+     * Sets the sound.
+     */
     public void setSound(boolean sound) {
         this.sound = sound;
         if (!sound) {
             soundText.setText("Sound Currently: OFF");
+        } else {
+            soundText.setText("Sound Currently: ON");
         }
+    }
+
+    /*
+     * Sets the high score list to the given list
+     */
+    public void setHighScoreList(LinkedList<Integer> newHighScoreList) {
+        highScoreList = newHighScoreList;
+        highScoreText.setText("\n• High Score: " + highScoreList.get(0) + "\n" +
+                "\n" +
+                "• High Score 2: " + highScoreList.get(1) + "\n" +
+                "\n" +
+                "• High Score 3: " + highScoreList.get(2) + "\n");
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

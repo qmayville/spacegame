@@ -18,7 +18,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import sun.awt.image.ImageWatched;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /*
  * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
@@ -248,7 +251,7 @@ public class gameView extends Application{
     /*
      * Changes the scene once the game is over
      */
-    public void gameOver(boolean sound) {
+    public void gameOver(boolean sound, LinkedList<Integer> highScoreList) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
 
@@ -269,7 +272,7 @@ public class gameView extends Application{
         mainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                mainMenu(sound);
+                mainMenu(sound, highScoreList);
             }
         });
 
@@ -296,16 +299,17 @@ public class gameView extends Application{
      */
     private void newGame() {
         gameStage.close();
-        gameController newGame = new gameController(new GameModel(model.getSound()));
+        gameController newGame = new gameController(new GameModel(model.getSound(),model.getHighScoreList()));
     }
 
     /*
      * Sets the current stage to the main menu
      */
-    private void mainMenu(boolean sound) {
+    private void mainMenu(boolean sound, LinkedList<Integer> highScoreList) {
         mainMenuView menu = new mainMenuView();
         menu.start(menu.mainStage);
         menu.setSound(sound);
+        menu.setHighScoreList(highScoreList);
         gameStage.close();
     }
 
