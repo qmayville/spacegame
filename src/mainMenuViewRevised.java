@@ -27,7 +27,7 @@ public class mainMenuViewRevised extends Application {
     public static final double MAX_BUTTON_WIDTH = 180;
     private static final double SCENE_WIDTH = 550;
     private static final double SCENE_HEIGHT = 700;
-    private Stage mainStage;
+    static Stage mainStage;
     private boolean sound = true;
     //this might not be the best way to display sound
     private Text soundText = new Text("Sound Currently: ON");
@@ -414,5 +414,12 @@ public class mainMenuViewRevised extends Application {
         homeButtons.getChildren().addAll(soundText, soundOn, soundOff, back);
 
         return homeButtons;
+    }
+
+    public void setSound(boolean sound) {
+        this.sound = sound;
+        if (!sound) {
+            soundText.setText("Sound Currently: OFF");
+        }
     }
 }

@@ -1,16 +1,22 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -250,6 +256,61 @@ public class gameViewRevised extends Application{
     private void drawScore(){
         score = "Score: " + model.getScore();
         graphics.fillText(score, 5, 20);
+    }
+
+    public void gameOver(boolean sound) {
+        BorderPane root = new BorderPane();
+        root.setPadding(new Insets(50, 0, 20, 0));
+
+        VBox gameOverButtons = new VBox();
+
+        Text text = new Text(score);
+        text.setFont(Font.font("Herculanum",FontWeight.BOLD , 30));
+        text.setFill(Color.BEIGE);
+
+
+        gameOverButtons.setAlignment(Pos.CENTER);
+        Button mainMenuButton = new Button("Main Menu");
+        mainMenuButton.setMaxWidth(280);
+        Button playAgainButton = new Button("Play Again");
+        playAgainButton.setMaxWidth(280);
+
+
+        mainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                mainMenu(sound);
+            }
+        });
+
+        playAgainButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                newGame();
+            }
+        });
+        gameOverButtons.setSpacing(30);
+        gameOverButtons.setPadding(new Insets(0, 0, 400, 0));
+        gameOverButtons.getChildren().addAll(text,playAgainButton, mainMenuButton);
+        root.setTop(gameOverButtons);
+
+        Scene gameOverScene = new Scene(root, 550, 700);
+        gameOverScene.getStylesheets().addAll(this.getClass().getResource("stylesheet.css").toExternalForm());
+        
+
+        gameStage.setScene(gameOverScene);
+    }
+
+    private void newGame() {
+        gameStage.close();
+        gameController newGame = new gameController(new GameModel(model.getSound()));
+    }
+
+    private void mainMenu(boolean sound) {
+        mainMenuViewRevised menu = new mainMenuViewRevised();
+        menu.start(menu.mainStage);
+        menu.setSound(sound);
+        gameStage.close();
     }
 
 }

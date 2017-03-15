@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -409,6 +410,8 @@ public class GameModel {
         }
         spaceship.setImage(explosion);
         gameTimer.stop();
+
+        view.gameOver(sound);
     }
 
     /*
@@ -425,7 +428,6 @@ public class GameModel {
         }
     }
 
-    //TODO implement this method
     /*
      * Generates obstacle sprites that are added to obstacleList
      */
@@ -441,16 +443,10 @@ public class GameModel {
             obstacleList.add(asteroid);
             counter++;
         }
+    }
 
-//        //TODO: check asteroids doint' intersect bonuses
-//        //Temporary basic implementation generates one asteroid at a time
-//        int positionX = randomNumberGenerator.nextInt(229);
-//        int positionX2 = (randomNumberGenerator.nextInt(230) + 230);
-//        //TODO make velocity faster as time goes by, make sure velocity is same as backgrounds
-//        AsteroidSprite asteroid1 = new AsteroidSprite(positionX, -200, 120, asteroidImage, 700);
-//        obstacleList.add(asteroid1);
-//        AsteroidSprite asteroid2 = new AsteroidSprite(positionX2, -50, 120, asteroidImage, 700);
-//        obstacleList.add(asteroid2);
+    public boolean getSound() {
+        return sound;
     }
 
 
