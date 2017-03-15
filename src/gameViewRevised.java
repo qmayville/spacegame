@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,6 +14,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.control.Button;
+
 
 
 import java.io.File;
@@ -52,6 +55,7 @@ public class gameViewRevised extends Application{
     private Image background;
     private Image space;
     private Image fuelGauge;
+    private Image pause;
 
     public String score;
 
@@ -87,6 +91,7 @@ public class gameViewRevised extends Application{
         background = new Image("resources/GameBackGround.png", backgroundWidth, backgroundHeight, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
         space = new Image("resources/starryPlanetBackGround.png", backgroundWidth, backgroundHeight, true, true);
+        pause = new Image("resources/pausebutton.png",30, 30, true, true);
         //Sets fill color and font/font size for score
         graphics.setFill(Color.YELLOW);
         graphics.setFont(Font.font("Calibri", FontWeight.NORMAL, 20));
@@ -119,10 +124,6 @@ public class gameViewRevised extends Application{
             }
         });
 
-
-
-
-
         gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -142,7 +143,7 @@ public class gameViewRevised extends Application{
     public void update(){
         //Order matters
         graphics.clearRect(0, 0, canvasWidth, canvasHeight);
-        drawBackgroundImages(background, fuelGauge);
+        drawBackgroundImages(background, fuelGauge, pause);
         drawAsteroids();
         drawSpaceship();
         drawFuelIndicator();
@@ -218,7 +219,7 @@ public class gameViewRevised extends Application{
     /*
      * Draws the background images.
      */
-    private void drawBackgroundImages(Image background, Image fuelGauge) {
+    private void drawBackgroundImages(Image background, Image fuelGauge, Image pause) {
 
         if (backgroundYCoord < -5100){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
@@ -240,6 +241,7 @@ public class gameViewRevised extends Application{
         }
 
         graphics.drawImage(fuelGauge,530, 400);
+        graphics.drawImage(pause,500, 10);
     }
 
     /*
