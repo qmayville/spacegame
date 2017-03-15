@@ -3,6 +3,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
+ * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
+ *
  * Sprite class is used to animate view objects. Sprite objects can move around and possibly intersect with each other.
  * they have an image representation, which is repeatedly drawn to the screen.
  */

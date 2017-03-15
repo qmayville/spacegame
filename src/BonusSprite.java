@@ -3,7 +3,7 @@ import javafx.scene.image.Image;
 /**
  * Sprite class for bonus objects
  *
- * Created by mayvilleq on 3/9/17.
+ * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
  */
 
 public class BonusSprite extends SpaceObjectSprite {
@@ -14,7 +14,9 @@ public class BonusSprite extends SpaceObjectSprite {
         super(positionX,positionY,velocityY,image,maxY);
         this.bonusType = bonusType;
     }
-
+    /*
+     * returns bonus type, meaning which bunus you get.
+     */
     public String getBonusType() {
         return bonusType;
     }

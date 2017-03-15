@@ -20,6 +20,10 @@ public class gameController {
     }
 
 
+    /*
+     * methods below pass on alerts from the view to the model, where they are handled appropriately.
+     */
+
     public void rightArrowKey() {
         model.startAccelerationPositive();
     }

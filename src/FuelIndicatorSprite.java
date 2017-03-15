@@ -2,7 +2,8 @@
 import javafx.scene.image.Image;
 
 /**
- * Created by casselmacee on 3/9/17.
+ * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
+ *
  */
 
 

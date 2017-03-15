@@ -2,6 +2,7 @@ import javafx.scene.image.Image;
 
 /**
  * Created by mayvilleq on 3/8/17.
+ * This sprite
  */
 public class LifeIndicatorSprite extends AbstractSprite {
     private static final double MIN_Y = 400;

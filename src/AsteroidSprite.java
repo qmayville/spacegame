@@ -3,7 +3,7 @@ import javafx.scene.image.Image;
 /**
  * Sprite class for asteroids.
  *
- * Created by envy on 3/7/17.
+ * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
  */
 public class AsteroidSprite extends SpaceObjectSprite {
 

@@ -92,6 +92,9 @@ public class GameModel {
 
     public ArrayList<BonusSprite> getBonusList() { return bonusList; }
 
+    /*
+     * creates the necessary objects
+     */
     public void initialize() {
         this.spaceship = new ShipSprite(250, 600, shipImage1, 100, 4);
         Image fuelIndicatorImage = new Image("resources/arrow.png",23,20,true,true);
@@ -115,7 +118,8 @@ public class GameModel {
     }
 
     /*
-     * Constructs the timer that manages the game
+     * Constructs the timer that manages the game. Inside this method, everything that needs to be repeated or checked
+     * for at 60 fps takes place. 
      */
     public void constructTimer() {
         gameTimer = new AnimationTimer() {
