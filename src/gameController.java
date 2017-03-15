@@ -1,4 +1,6 @@
 /**
+ * Controller initializes view and model and links user input from the view to the model.
+ *
  * Created by Ethan Cassel-Mace, Hannah Barnstone, Quinn Mayville, && Michael Vue
  */
 public class gameController {

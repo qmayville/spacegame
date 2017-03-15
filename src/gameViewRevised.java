@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,20 +17,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.control.Button;
-
-
-
-import java.io.File;
 import java.util.ArrayList;
 
 /*
  * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
  *
- * The window for the actual gameplay. For now displays a static background, once game is implemented
- * the background will change over time.
+ * The window for the actual gameplay. Updates via access to the model and
+ * has a scrolling background.
  */
 public class gameViewRevised extends Application{
 
@@ -41,17 +34,15 @@ public class gameViewRevised extends Application{
 
     private gameController controller;
     private GameModel model;
-    GraphicsContext graphics;
+    private GraphicsContext graphics;
 
     private int canvasWidth = 550;
     private int canvasHeight = 700;
 
-    //Placeholders for actual game implementation where background is moving
+    //Values that control speed of scrolling background
     private int backgroundWidth = canvasWidth;
-    //    4000
     private int backgroundHeight = 0;
     private int backgroundXCoord = 0;
-    //    -2290
     private double backgroundYCoord = -5280;
     private double spaceBound = -800;
     private double earthMovement = .7;
@@ -61,9 +52,8 @@ public class gameViewRevised extends Application{
     private Image background;
     private Image space;
     private Image fuelGauge;
-    private Image pause;
 
-    public String score;
+    private String score;
 
 
     public gameViewRevised(gameController controller, GameModel model) {
@@ -97,7 +87,6 @@ public class gameViewRevised extends Application{
         background = new Image("resources/GameBackGround.png", backgroundWidth, backgroundHeight, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
         space = new Image("resources/starryPlanetBackGround.png", backgroundWidth, backgroundHeight, true, true);
-        pause = new Image("resources/pausebutton.png",30, 30, true, true);
         //Sets fill color and font/font size for score
         graphics.setFill(Color.YELLOW);
         graphics.setFont(Font.font("Calibri", FontWeight.NORMAL, 20));
@@ -147,9 +136,8 @@ public class gameViewRevised extends Application{
      * Updates the view to match the model's current state
      */
     public void update(){
-        //Order matters
         graphics.clearRect(0, 0, canvasWidth, canvasHeight);
-        drawBackgroundImages(background, fuelGauge, pause);
+        drawBackgroundImages(background, fuelGauge);
         drawAsteroids();
         drawSpaceship();
         drawFuelIndicator();
@@ -225,7 +213,7 @@ public class gameViewRevised extends Application{
     /*
      * Draws the background images.
      */
-    private void drawBackgroundImages(Image background, Image fuelGauge, Image pause) {
+    private void drawBackgroundImages(Image background, Image fuelGauge) {
 
         if (backgroundYCoord < -5100){
             graphics.drawImage(background, backgroundXCoord, backgroundYCoord);
@@ -247,7 +235,6 @@ public class gameViewRevised extends Application{
         }
 
         graphics.drawImage(fuelGauge,530, 400);
-        graphics.drawImage(pause,500, 10);
     }
 
     /*
@@ -258,6 +245,9 @@ public class gameViewRevised extends Application{
         graphics.fillText(score, 5, 20);
     }
 
+    /*
+     * Changes the scene once the game is over
+     */
     public void gameOver(boolean sound) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(50, 0, 20, 0));
@@ -301,11 +291,17 @@ public class gameViewRevised extends Application{
         gameStage.setScene(gameOverScene);
     }
 
+    /*
+     * Starts a new game within the game window
+     */
     private void newGame() {
         gameStage.close();
         gameController newGame = new gameController(new GameModel(model.getSound()));
     }
 
+    /*
+     * Sets the current stage to the main menu
+     */
     private void mainMenu(boolean sound) {
         mainMenuViewRevised menu = new mainMenuViewRevised();
         menu.start(menu.mainStage);

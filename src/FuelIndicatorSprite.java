@@ -2,8 +2,9 @@
 import javafx.scene.image.Image;
 
 /**
- * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
+ * Sprite class for the fuel indicator.
  *
+ * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
  */
 
 

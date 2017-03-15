@@ -1,8 +1,9 @@
 import javafx.scene.image.Image;
 
 /**
- * Created by mayvilleq on 3/8/17.
- * This sprite
+ * Sprite class for the life indicators.
+ *
+ * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
  */
 public class LifeIndicatorSprite extends AbstractSprite {
     private static final double MIN_Y = 400;

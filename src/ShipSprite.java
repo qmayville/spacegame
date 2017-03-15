@@ -2,7 +2,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 /**
- * Created by envy on 3/7/17.
+ * * Sprite class for the spaceship.
+ *
+ * Quinn Mayville, Michael Vue, Ethan Cassel-Mace, Hannah Barnstone
  */
 public class ShipSprite extends AbstractSprite {
     private double fuel;

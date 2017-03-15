@@ -1,20 +1,25 @@
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
+import javafx.util.Duration;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
 
 
 /**
+ * Model for the space game stores the game data and updates
+ * the view every time it changes state.
+ *
  * Created by Michael Vue, Ethan Cassel-Mace, Hannah Barnstone, && Quinn Mayville
  */
 public class GameModel {
@@ -106,6 +111,10 @@ public class GameModel {
         this.view = view;
     }
 
+
+    /*
+     * Turns on and off the life indicators
+     */
     private void setLifeIndicators(int lives){
         for(int i = lifeIndicatorList.size()-1; i >= 0; i --){
             if(i >= lifeIndicatorList.size() - lives) {
@@ -415,7 +424,11 @@ public class GameModel {
         spaceship.setImage(explosion);
         gameTimer.stop();
 
-        view.gameOver(sound);
+        //Brief pause before transition to new scene
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(2500),
+                ae -> view.gameOver(sound)));
+        timeline.play();
     }
 
     /*
