@@ -18,7 +18,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import sun.awt.image.ImageWatched;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -48,8 +47,8 @@ public class gameView extends Application{
     private int backgroundXCoord = 0;
     private double backgroundYCoord = -5280;
     private double spaceBound = -800;
-    private double earthMovement = .7;
-    private double spaceMovement = .1;
+    private double earthMovement = 50;
+    private double spaceMovement = 2;
 
     //Images used in background
     private Image background;
@@ -87,7 +86,7 @@ public class gameView extends Application{
      * Constructs the images to be used in the background.
      */
     private void createImages() {
-        background = new Image("resources/gameBackground.png", backgroundWidth, backgroundHeight, true, true);
+        background = new Image("resources/gamebackground.png", backgroundWidth, backgroundHeight, true, true);
         fuelGauge = new Image("resources/bar.png", 300, 300, true, true);
         space = new Image("resources/starryPlanetBackGround.png", backgroundWidth, backgroundHeight, true, true);
         //Sets fill color and font/font size for score
